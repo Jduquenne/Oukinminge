@@ -1,13 +1,14 @@
 import { InterfaceMap } from "./InterfaceMap.js";
 import { InterfaceCards } from "./InterfaceCards.js";
+import { InterfaceSearchbar } from "./InterfaceSearchbar.js";
 
 class InterfaceApp {
     /**
      *
-     * @param {Array} restaurantsInfos
+     * @param {Array} restaurants
      */
-    constructor(restaurantsInfos) {
-        this.restaurantsInfos = restaurantsInfos
+    constructor(restaurants) {
+        this.restaurants = restaurants
 
         this.defaultMapParams = {
             container: document.querySelector('#map'),
@@ -18,16 +19,20 @@ class InterfaceApp {
             mapTypeControl: false,
             streetViewControl: false,
             fullscreenControl: false,
-
         }
-
-        this.interfaceMap = new InterfaceMap(this.defaultMapParams, this.restaurantsInfos)
-        this.interfaceCards = new InterfaceCards(this.restaurantsInfos)
+        this.controlElt = {
+            searchbarInput: document.getElementById('input-search'),
+            infosRestaurant: $('.infos-restaurant')
+        }
+        this.interfaceMap = new InterfaceMap(this.defaultMapParams, this.restaurants)
+        this.interfaceCards = new InterfaceCards(this.restaurants, this.controlElt.infosRestaurant)
+        this.interfaceSearchbar = new InterfaceSearchbar(this.interfaceMap.map, this.controlElt.searchbarInput)
     }
 
     displayApp() {
         this.interfaceMap.initMap()
         this.interfaceCards.displayCards()
+        this.interfaceSearchbar.initSearchBoxAutocomplete()
     }
 }
 

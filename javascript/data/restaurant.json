@@ -2,8 +2,8 @@
   {
     "name":"Au Flamand Gourmand",
     "adress":"23 Rue Saint-Jacques, 59270 Bailleul",
-    "lat":50.73813162612049,
-    "long":2.734394165773861,
+    "lat":50.738027916229676,
+    "long":2.7343629634937594,
     "image": null,
     "ratings":[
       {
@@ -19,8 +19,8 @@
   {
     "name":"Pizza Andiamo",
     "adress":"5 Rue d'Occident, 59270 Bailleul",
-    "lat":50.73898737221806,
-    "long":2.7332990616484305,
+    "lat":50.73887714197143,
+    "long":2.7333259642471233,
     "image": null,
     "ratings":[
       {
@@ -36,8 +36,8 @@
   {
     "name":"L'Gusto",
     "adress":"10 Rue d'Occident, 59270 Bailleul",
-    "lat":50.73929291169948,
-    "long":2.7335243672020626,
+    "lat":50.7391801360158,
+    "long":2.733570715821261,
     "image": null,
     "ratings":[
       {
@@ -53,8 +53,8 @@
   {
     "name":"Friterie Bailleuloise",
     "adress":"42 Pl. Charles de Gaulle, 59270 Bailleul",
-    "lat":50.73921822445476,
-    "long":2.733910605294004,
+    "lat":50.73911223836117,
+    "long":2.7339100152595446,
     "image": null,
     "ratings":[
       {
@@ -70,8 +70,8 @@
   {
     "name":"L'Epi de Blé",
     "adress":"24 Pl. Charles de Gaulle, 59270 Bailleul",
-    "lat":50.739503393293695,
-    "long":2.7340715378323135,
+    "lat":50.73936339918706,
+    "long":2.734066428949045,
     "image": null,
     "ratings":[
       {
@@ -87,8 +87,25 @@
   {
     "name":"L’Excelsior",
     "adress":"1 Rue de Lille, 59270 Bailleul",
-    "lat":50.73938117828965,
-    "long":2.73600272829202,
+    "lat":50.73930515754798,
+    "long":2.7360614375641896,
+    "image": null,
+    "ratings":[
+      {
+        "stars":4,
+        "comment":"Un excellent restaurant, j'y reviendrai ! Par contre il vaut mieux aimer la viande."
+      },
+      {
+        "stars":5,
+        "comment":"Tout simplement mon restaurant préféré !"
+      }
+    ]
+  },
+  {
+    "name":"Café Bar Bailleul",
+    "adress":"2 Rue d'Ypres, 59270 Bailleul",
+    "lat":50.73940413577366,
+    "long":2.7359554147160776,
     "image": null,
     "ratings":[
       {

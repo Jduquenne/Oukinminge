@@ -4,19 +4,20 @@ class InterfaceCards {
 
     /**
      *
-     * @param {Array} restaurantsInfos
+     * @param restaurants
+     * @param container
      */
-    constructor( restaurantsInfos ) {
-        this.restaurantsInfos = restaurantsInfos
+    constructor( restaurants, container ) {
+        this.restaurants = restaurants
         this.controlsElt = {
-            infosRestaurant: $('.infos-restaurant')
+            infosRestaurant: container
         }
     }
 
     displayCards() {
         this.controlsElt.infosRestaurant.empty()
-        for (let i = 0; i < this.restaurantsInfos.length; i++) {
-            this.controlsElt.infosRestaurant.append( this.generateOneCard(this.restaurantsInfos[i]));
+        for (let i = 0; i < this.restaurants.length; i++) {
+            this.controlsElt.infosRestaurant.append( this.createCard(this.restaurants[i]));
         }
     }
 
@@ -25,7 +26,7 @@ class InterfaceCards {
      * @param {Object} restaurant
      * @returns {*|jQuery}
      */
-    generateOneCard(restaurant) {
+    createCard(restaurant) {
         const streetViewUrl = `https://maps.googleapis.com/maps/api/streetview?location=${restaurant.lat},${restaurant.long}&size=250x250&key=${GOOGLE_MAP_API_KEY}`
 
         const restaurantCard = $("<div class='info-card-restaurant'></div>")
@@ -41,7 +42,7 @@ class InterfaceCards {
         const restaurantCardRightMainAdress = $(`<div class='info-card-restaurant-adress'>${this.formatAdressConvert(restaurant.adress)}</div>`)
         restaurantCardRightMain.append(restaurantCardRightMainName, restaurantCardRightMainAdress)
 
-        const restaurantCardRightRate = $("<div class='info-card-restaurant-rate'>*****</div>")
+        const restaurantCardRightRate = $("<div class='info-card-restaurant-rate'>Note : 4.2</div>")
 
         restaurantCardRight.append(restaurantCardRightMain, restaurantCardRightRate)
 

@@ -1,8 +1,8 @@
-import { RestaurantRepository } from "../Repository/RestaurantRepository.js";
-import { InterfaceApp } from "../Views/InterfaceApp.js";
+import {RestaurantRepository} from "../Repository/RestaurantRepository.js";
+import {InterfaceApp} from "../Views/InterfaceApp.js";
 
 class AppController {
-     constructor() {
+    constructor() {
         this.restaurants = [];
         this.interfaceApp = null
     }
@@ -20,4 +20,4 @@ class AppController {
     }
 }
 
-export { AppController }
+export {AppController}
