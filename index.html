@@ -4,41 +4,53 @@
     <meta charset="UTF-8">
     <title>Oukinminge</title>
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+          integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
     <script type="module" src="javascript/app.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
-    <div class="app">
-        <div class="left-menu">
+<div class="app">
+    <header>
+        <div class="header-container">
             <div class="brand">
                 <i class="fas fa-utensils"></i>
                 <h1>Oukin<span>minge</span></h1>
             </div>
+            <div class="spacer-20"></div>
             <div class="search-container">
-                <input id="input-search"
-                     class="controls"
-                     type="text"
-                     placeholder="Recherche...">
+                <div class="search">
+                    <div class="search-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <div class="spacer-15"></div>
+                    <input id="input-search"
+                           class="controls"
+                           type="text"
+                           placeholder="Recherche...">
+                </div>
             </div>
+        </div>
+    </header>
+    <div class="main">
+        <div class="left-menu">
             <div class="infos-restaurant">
 <!--                <div class="info-card-restaurant">-->
-<!--                    <div class="info-card-restaurant-left">-->
-<!--                        <img src="assets/img/voici-la-seconde-salle.jpg" alt="notFound">-->
-<!--                    </div>-->
+<!--                    <div class="info-card-restaurant-left"><img-->
+<!--                            src="https://maps.googleapis.com/maps/api/streetview?location=50.738027916229676,2.7343629634937594&amp;size=250x250&amp;key=AIzaSyCKGsWfoTU9625KJ3MayRRpdqqC0Sboa9g"-->
+<!--                            alt="Au Flamand Gourmand"></div>-->
 <!--                    <div class="info-card-restaurant-right">-->
 <!--                        <div class="info-card-restaurant-main">-->
-<!--                            <div class="info-card-restaurant-name">Bistrot du coin</div>-->
-<!--                            <div class="info-card-restaurant-adress">44 rue des foulons</div>-->
+<!--                            <div class="info-card-restaurant-name">Au Flamand Gourmand</div>-->
+<!--                            <div class="info-card-restaurant-adress">23 Rue Saint-Jacques,<br> 59270 Bailleul</div>-->
 <!--                        </div>-->
-<!--                        <div class="info-card-restaurant-rate">-->
-<!--                            *****-->
-<!--                        </div>-->
+<!--                        <div class="info-card-restaurant-rate">Note : 4.2</div>-->
 <!--                    </div>-->
 <!--                </div>-->
             </div>
         </div>
-        <div id="map"></div>
+        <div id="map" tabindex="-1"></div>
     </div>
+</div>
 </body>
 </html>
