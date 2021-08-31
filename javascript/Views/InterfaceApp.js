@@ -1,6 +1,7 @@
 import { InterfaceMap } from "./InterfaceMap.js";
 import { InterfaceCards } from "./InterfaceCards.js";
 import { InterfaceSearchbar } from "./InterfaceSearchbar.js";
+import { InterfaceModal } from "./InterfaceModal.js";
 
 class InterfaceApp {
     /**
@@ -22,10 +23,12 @@ class InterfaceApp {
         }
         this.controlElt = {
             searchbarInput: document.getElementById('input-search'),
-            infosRestaurant: $('.infos-restaurant')
+            infosRestaurant: $('.infos-restaurant'),
+            overlayRestaurant:  $('.overlay-restaurant-container'),
         }
-        this.interfaceMap = new InterfaceMap(this.defaultMapParams, this.restaurants)
-        this.interfaceCards = new InterfaceCards(this.restaurants, this.controlElt.infosRestaurant)
+        this.interfaceModal = new InterfaceModal(this.controlElt.overlayRestaurant)
+        this.interfaceMap = new InterfaceMap(this.defaultMapParams, this.restaurants, (restaurant) => this.displayModalWithPanTo(restaurant))
+        this.interfaceCards = new InterfaceCards(this.restaurants, this.controlElt.infosRestaurant, (restaurant) => this.displayModalWithPanTo(restaurant))
         this.interfaceSearchbar = new InterfaceSearchbar(this.interfaceMap.map, this.controlElt.searchbarInput)
     }
 
@@ -33,6 +36,19 @@ class InterfaceApp {
         this.interfaceMap.initMap()
         this.interfaceCards.displayCards()
         this.interfaceSearchbar.initSearchBoxAutocomplete()
+    }
+
+    displayModalWithPanTo (restaurant) {
+        this.interfaceModal.generateModal(restaurant)
+        this.interfaceModal.showModal()
+        if (this.interfaceMap.markerSelected) {
+            this.interfaceMap.markerSelected.setAnimation(null);
+        }
+        this.interfaceMap.markerSelected = restaurant.marker;
+        restaurant.marker.setAnimation(google.maps.Animation.BOUNCE);
+
+        this.interfaceMap.map.panTo(restaurant.marker.positionForPanTo);
+        this.interfaceMap.map.setZoom(18)
     }
 }
 

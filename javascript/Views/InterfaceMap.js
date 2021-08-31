@@ -1,12 +1,11 @@
-import { GOOGLE_MAP_API_KEY } from "../config.js";
-
 class InterfaceMap {
     /**
      *
      * @param {Object} mapParams
      * @param {Array} restaurants
+     * @param {Function} onMarkerClick
      */
-    constructor(mapParams, restaurants) {
+    constructor(mapParams, restaurants, onMarkerClick) {
         this.map = new google.maps.Map(mapParams.container, {
             zoom: mapParams.zoom,
             center:  mapParams.position,
@@ -18,7 +17,7 @@ class InterfaceMap {
 
         this.restaurants = restaurants
         this.markers = []
-        this.prevInfowindow = false
+        this.onMarkerClick = onMarkerClick
         this.markerSelected = false
     }
 
@@ -34,48 +33,22 @@ class InterfaceMap {
     }
 
     addMarker(restaurant) {
-        const myLatLng = new google.maps.LatLng(restaurant.lat, restaurant.long);
-        const streetViewImgContainer = document.createElement("img")
-        streetViewImgContainer.src = `https://maps.googleapis.com/maps/api/streetview?location=${restaurant.lat},${restaurant.long}&size=250x250&key=${GOOGLE_MAP_API_KEY}`
-        streetViewImgContainer.className = 'infoWindowImg'
-        const contentString =
-            '<div id="infoWindowContent">' +
-                '<h3 id="infoWindowFirstHeading" class="infoWindowFirstHeading">'+ restaurant.name +'</h3>' +
-                '<div id="infoWindowBodyContent">' +
-                    '<p class="infoWindowAdress">'+ restaurant.adress +'</p>' +
-                    streetViewImgContainer.outerHTML +
-                "</div>" +
-            "</div>";
-        const infoWindowCustom = new google.maps.InfoWindow({
-            content: contentString
-        });
-        const marker = new google.maps.Marker({
-            position: myLatLng,
-            infoWindow: infoWindowCustom,
+        const restaurantLatLng = new google.maps.LatLng(restaurant.lat, restaurant.long);
+
+        restaurant.marker = new google.maps.Marker({
+            position: restaurantLatLng,
+            positionForPanTo: new google.maps.LatLng(restaurant.lat + 0.0006, restaurant.long),
             animation: null,
         })
 
-        google.maps.event.addListener(marker, "click",  () => {
-            // if( this.prevInfowindow ) {
-            //     this.prevInfowindow.close();
-            // }
-            // this.prevInfowindow = infoWindowCustom;
-            // marker.infoWindow.open(this.map, marker);
-
-            if (this.markerSelected) {
-                this.markerSelected.setAnimation(null);
-            }
-            this.markerSelected = marker;
-            marker.setAnimation(google.maps.Animation.BOUNCE);
-
-            this.map.panTo(myLatLng);
-            this.map.setZoom(18)
+        google.maps.event.addListener(restaurant.marker, "click",  () => {
+            this.onMarkerClick(restaurant)
         });
 
-        marker.setMap(this.map)
-        this.markers.push(marker)
+        restaurant.marker.setMap(this.map)
+        this.markers.push(restaurant.marker)
 
-        return marker
+        return restaurant.marker
     }
 
     getLocalisation() {
@@ -93,22 +66,7 @@ class InterfaceMap {
                         lng: position.coords.longitude,
                     };
                     this.map.panTo(pos);
-                    this.map.setZoom(15)
-                    // if (position.coords.accuracy > 30) {
-                    //     infoWindow.setPosition(pos);
-                    //     const sad = String.fromCodePoint(0x1F480)
-                    //     infoWindow.setContent(
-                    //         `lat = ${pos.lat.toFixed(5)} long = ${pos.lng.toFixed(5)} accuracy = ${position.coords.accuracy}m de marge d'erreur. Mauvaise position ${sad}`
-                    //     );
-                    //     infoWindow.open(this.map);
-                    //     this.map.setCenter(pos);
-                    // } else {
-                    //     const smile = String.fromCodePoint(0x1F600)
-                    //     infoWindow.setPosition(pos);
-                    //     infoWindow.setContent(`lat = ${pos.lat} long = ${pos.lng} accuracy = ${position.coords.accuracy}m de marge d'erreur. Bonne position ! ${smile}`);
-                    //     infoWindow.open(this.map);
-                    //     this.map.setCenter(pos);
-                    // }
+                    this.map.setZoom(16)
                 },
                 () => {
                     this.handleLocationError(true, infoWindow, this.map.getCenter());

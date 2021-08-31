@@ -14,7 +14,7 @@ class AppController {
 
     async initApp() {
         this.restaurants = await this.getRestaurants()
-        console.log(this.restaurants)
+        // console.log(this.restaurants)
         this.interfaceApp = new InterfaceApp(this.restaurants);
         this.interfaceApp.displayApp();
     }

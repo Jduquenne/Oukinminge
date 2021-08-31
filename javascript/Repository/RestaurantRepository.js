@@ -14,7 +14,7 @@ class RestaurantRepository {
         const data = await response.json();
 
         data.forEach((restaurant) => {
-            restaurants.push(new Restaurant(restaurant.name, restaurant.adress, restaurant.lat, restaurant.long, restaurant.image, restaurant.ratings))
+            restaurants.push(new Restaurant(restaurant.name, restaurant.adress, restaurant.phone, restaurant.lat, restaurant.long, restaurant.image, restaurant.ratings))
         })
         return restaurants
     }

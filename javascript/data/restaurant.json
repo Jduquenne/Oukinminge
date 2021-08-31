@@ -2,33 +2,44 @@
   {
     "name":"Au Flamand Gourmand",
     "adress":"23 Rue Saint-Jacques, 59270 Bailleul",
+    "phone": "0648775921",
     "lat":50.738027916229676,
     "long":2.7343629634937594,
     "image": null,
     "ratings":[
       {
-        "stars":4,
+        "stars":2,
+        "commentator":"Jason",
         "comment":"Un excellent restaurant, j'y reviendrai ! Par contre il vaut mieux aimer la viande."
       },
       {
         "stars":5,
-        "comment":"Tout simplement mon restaurant préféré !"
+        "commentator":"Batman",
+        "comment":"Lorem ipsum dolor sit amet, consectetur adipisicing elit. A accusantium asperiores aut consequuntur corporis\n    dolorum ducimus est inventore iste, laborum modi nesciunt obcaecati recusandae similique suscipit ut veniam\n    veritatis, voluptatibus.  A accusantium asperiores aut consequuntur corporis\n    dolorum ducimus est inventore iste, laborum modi nesciunt obcaecati recusandae similique suscipit ut veniam\n    veritatis, voluptatibus."
+      },
+      {
+        "stars":2,
+        "commentator":"Jason",
+        "comment":"Un excellent restaurant, j'y reviendrai ! Par contre il vaut mieux aimer la viande."
       }
     ]
   },
   {
     "name":"Pizza Andiamo",
     "adress":"5 Rue d'Occident, 59270 Bailleul",
+    "phone": "0642795921",
     "lat":50.73887714197143,
     "long":2.7333259642471233,
     "image": null,
     "ratings":[
       {
-        "stars":5,
+        "stars":4,
+        "commentator":"IronMan",
         "comment":"Une minuscule pizzeria délicieuse cachée juste à côté du Sacré choeur !"
       },
       {
-        "stars":3,
+        "stars":1,
+        "commentator":"Antman",
         "comment":"J'ai trouvé ça correct, sans plus"
       }
     ]
@@ -36,16 +47,19 @@
   {
     "name":"L'Gusto",
     "adress":"10 Rue d'Occident, 59270 Bailleul",
+    "phone": "0614871232",
     "lat":50.7391801360158,
     "long":2.733570715821261,
     "image": null,
     "ratings":[
       {
         "stars":4,
+        "commentator":"Thor",
         "comment":"Un excellent restaurant, j'y reviendrai ! Par contre il vaut mieux aimer la viande."
       },
       {
         "stars":5,
+        "commentator":"Jason",
         "comment":"Tout simplement mon restaurant préféré !"
       }
     ]
@@ -53,33 +67,55 @@
   {
     "name":"Friterie Bailleuloise",
     "adress":"42 Pl. Charles de Gaulle, 59270 Bailleul",
+    "phone": "078495682",
     "lat":50.73911223836117,
     "long":2.7339100152595446,
     "image": null,
     "ratings":[
       {
-        "stars":4,
+        "stars":0,
+        "commentator":"Flash",
         "comment":"Un excellent restaurant, j'y reviendrai ! Par contre il vaut mieux aimer la viande."
       },
       {
         "stars":5,
+        "commentator":"Hulk",
+        "comment":"Tout simplement mon restaurant préféré !"
+      },
+      {
+        "stars":2,
+        "commentator":"Falked",
+        "comment":"Tout simplement mon restaurant préféré !"
+      },
+      {
+        "stars":3,
+        "commentator":"Prirodny",
+        "comment":"Tout simplement mon restaurant préféré !"
+      },
+      {
+        "stars":1,
+        "commentator":"Vanessa",
         "comment":"Tout simplement mon restaurant préféré !"
       }
+
     ]
   },
   {
     "name":"L'Epi de Blé",
     "adress":"24 Pl. Charles de Gaulle, 59270 Bailleul",
+    "phone": "0782154896",
     "lat":50.73936339918706,
     "long":2.734066428949045,
     "image": null,
     "ratings":[
       {
         "stars":4,
+        "commentator":"Jason",
         "comment":"Un excellent restaurant, j'y reviendrai ! Par contre il vaut mieux aimer la viande."
       },
       {
-        "stars":5,
+        "stars":2,
+        "commentator":"R2D2",
         "comment":"Tout simplement mon restaurant préféré !"
       }
     ]
@@ -87,33 +123,39 @@
   {
     "name":"L’Excelsior",
     "adress":"1 Rue de Lille, 59270 Bailleul",
+    "phone": "0748219534",
     "lat":50.73930515754798,
     "long":2.7360614375641896,
     "image": null,
     "ratings":[
       {
-        "stars":4,
+        "stars":5,
+        "commentator":"C3PO",
         "comment":"Un excellent restaurant, j'y reviendrai ! Par contre il vaut mieux aimer la viande."
       },
       {
         "stars":5,
-        "comment":"Tout simplement mon restaurant préféré !"
+        "commentator":"Dark Vador",
+        "comment":"Je suis ton père !"
       }
     ]
   },
   {
     "name":"Café Bar Bailleul",
     "adress":"2 Rue d'Ypres, 59270 Bailleul",
+    "phone": "0327845902",
     "lat":50.73940413577366,
     "long":2.7359554147160776,
     "image": null,
     "ratings":[
       {
-        "stars":4,
+        "stars":3,
+        "commentator":"Jason",
         "comment":"Un excellent restaurant, j'y reviendrai ! Par contre il vaut mieux aimer la viande."
       },
       {
-        "stars":5,
+        "stars":1,
+        "commentator":"Luke Skywalker",
         "comment":"Tout simplement mon restaurant préféré !"
       }
     ]
