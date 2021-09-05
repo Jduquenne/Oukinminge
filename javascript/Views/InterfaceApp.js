@@ -26,7 +26,7 @@ class InterfaceApp {
             infosRestaurant: $('.infos-restaurant'),
             overlayRestaurant:  $('.overlay-restaurant-container'),
         }
-        this.interfaceModal = new InterfaceModal(this.controlElt.overlayRestaurant)
+        this.interfaceModal = new InterfaceModal(this.controlElt.overlayRestaurant, () => this.setMarkerAnimationNull())
         this.interfaceMap = new InterfaceMap(this.defaultMapParams, this.restaurants, (restaurant) => this.displayModalWithPanTo(restaurant))
         this.interfaceCards = new InterfaceCards(this.restaurants, this.controlElt.infosRestaurant, (restaurant) => this.displayModalWithPanTo(restaurant))
         this.interfaceSearchbar = new InterfaceSearchbar(this.interfaceMap.map, this.controlElt.searchbarInput)
@@ -49,6 +49,13 @@ class InterfaceApp {
 
         this.interfaceMap.map.panTo(restaurant.marker.positionForPanTo);
         this.interfaceMap.map.setZoom(18)
+    }
+
+    setMarkerAnimationNull() {
+        if (this.interfaceMap.markerSelected) {
+            this.interfaceMap.markerSelected.setAnimation(null);
+            this.interfaceMap.map.setZoom(17)
+        }
     }
 }
 

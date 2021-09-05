@@ -1,11 +1,14 @@
 import { GOOGLE_MAP_API_KEY } from "../config.js";
 
 class InterfaceModal{
-    constructor(container) {
+    constructor(container, onClickClose) {
         this.controlsElt = {
-            overlayContainer: container
+            overlayContainer: container,
+            closeModal: $('.overlay-restaurant-close'),
+            infoCardRestaurant: $('.info-card-restaurant')
         }
         this.isOpen = false
+        this.onClickClose = onClickClose
     }
 
     setOpen () {
@@ -26,6 +29,7 @@ class InterfaceModal{
     hideModal() {
         if (this.isOpen) {
             this.controlsElt.overlayContainer.css({ top: '-200px'})
+            $('.info-card-restaurant').removeClass('active')
             this.setClose()
         }
     }
@@ -82,7 +86,13 @@ class InterfaceModal{
 
         overlayInfosContainer.append(overlayInfosName, overlayInfosCoordContainer, overlayInfosRatingContainer, overlayInfosType)
 
-        this.controlsElt.overlayContainer.append(overlayImgContainer, overlayInfosContainer)
+        const overlayCloseModal = $('<div class="overlay-restaurant-close">X</div>')
+        overlayCloseModal.on('click', () => {
+            this.hideModal()
+            this.onClickClose(restaurant)
+        })
+
+        this.controlsElt.overlayContainer.append(overlayImgContainer, overlayInfosContainer,overlayCloseModal)
     }
 
     generateComments (ratings) {

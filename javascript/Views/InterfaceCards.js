@@ -21,6 +21,9 @@ class InterfaceCards {
         for (let i = 0; i < this.restaurants.length; i++) {
             this.controlsElt.infosRestaurant.append( this.createCard(this.restaurants[i]));
         }
+        $('.info-card-restaurant').click(function(){
+            $(this).addClass('active').siblings('.info-card-restaurant').removeClass('active')
+        })
     }
 
     /**
@@ -31,7 +34,7 @@ class InterfaceCards {
     createCard(restaurant) {
         const streetViewUrl = `https://maps.googleapis.com/maps/api/streetview?location=${restaurant.lat},${restaurant.long}&size=250x250&key=${GOOGLE_MAP_API_KEY}`
 
-        const restaurantCard = $("<div class='info-card-restaurant'></div>")
+        const restaurantCard = $(`<div class='info-card-restaurant'></div>`)
 
         restaurantCard.on("click", () => {
             this.onCardClick(restaurant)

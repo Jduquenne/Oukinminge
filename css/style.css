@@ -296,6 +296,16 @@ body {
     font-weight: normal;
 }
 
+.main .overlay-restaurant-container .overlay-restaurant-close {
+    font-family: 'Oswald', sans-serif;
+    font-size: 18px;
+    font-weight: normal;
+    position: relative;
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
+}
+
 .main .overlay-restaurant-container .overlay-restaurant-comments-container .overlay-restaurant-comments .overlay-restaurant-comments-content {
     font-family: 'Oswald', sans-serif;
     font-size: 15px;
@@ -361,6 +371,11 @@ body {
     min-height: 110px;
     margin-top: 10px;
     cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.left-menu .infos-restaurant .info-card-restaurant.active {
+    background-color: #A3AFBF;
 }
 
 .left-menu .infos-restaurant .info-card-restaurant .info-card-restaurant-left {
