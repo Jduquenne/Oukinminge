@@ -82,7 +82,7 @@ class InterfaceModal{
 
         overlayInfosRatingContainer.append(overlayInfosRating, overlayInfosStarsContainer, overlayInfosCommentLength)
 
-        const overlayInfosType = $(`<div class="overlay-restaurant-infos-type">Restaurant, Brasserie</div>`)
+        const overlayInfosType = $(`<div class="overlay-restaurant-infos-type">${this.typeToString(restaurant)}</div>`)
 
         overlayInfosContainer.append(overlayInfosName, overlayInfosCoordContainer, overlayInfosRatingContainer, overlayInfosType)
 
@@ -131,6 +131,18 @@ class InterfaceModal{
     formatAdressConvert(adress) {
         adress = adress.replace(',', ',<br/>')
         return adress
+    }
+
+    typeToString(restaurant) {
+        let typeOfRestaurantToString = ""
+        for (let i = 0; i < restaurant.type.length; i++) {
+            if (restaurant.type[i] === restaurant.type[restaurant.type.length - 1]) {
+                typeOfRestaurantToString += restaurant.type[i]
+            } else {
+                typeOfRestaurantToString += restaurant.type[i] + ", "
+            }
+        }
+        return typeOfRestaurantToString
     }
 
 }

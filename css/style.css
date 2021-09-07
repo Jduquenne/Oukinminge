@@ -107,6 +107,30 @@ body {
     outline: none;
 }
 
+.header-container .selectRating {
+    display: flex;
+    align-items: center;
+}
+
+.header-container .selectRating select {
+    background-color: #F1F3F4;
+    font-family: 'Oswald', sans-serif;
+    font-size: 15px;
+    box-shadow: inset 0 -1px 0 #0d0d0d;
+    border: none;
+    height: 55.5%;
+    width: 100px;
+    padding: 10px;
+}
+
+.header-container .selectRating select option.hide {
+    display: none;
+}
+
+.header-container .selectRating select:focus {
+    outline: none;
+}
+
 .main {
     display: flex;
     width: 100vw;
@@ -467,4 +491,6 @@ body {
     font-weight: lighter;
     width: 50px;
 }
+
+
 

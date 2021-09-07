@@ -7,18 +7,21 @@ class Restaurant {
      * @param {string} phone
      * @param {number} lat
      * @param {number} long
+     * @param {string} type
      * @param {string} image
      * @param {Object} ratings
      */
-    constructor(name, adress, phone, lat, long, image, ratings) {
+    constructor(name, adress, phone, lat, long, type, image, ratings) {
         this.name = name
         this.adress = adress
         this.phone = phone
         this.lat = lat
         this.long = long
-        this.marker = null
+        this.type = type
         this.image = image
         this.ratings = ratings
+        this.marker = null
+        this.card = null
         this.average = this.getAverageRating(ratings)
     }
 

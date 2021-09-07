@@ -4,26 +4,25 @@ class InterfaceCards {
 
     /**
      *
-     * @param {[Object]} restaurants
      * @param {*|jQuery} container
      * @param {Function} onCardClick
      */
-    constructor( restaurants, container, onCardClick = null ) {
-        this.restaurants = restaurants
+    constructor( container, onCardClick = null ) {
         this.onCardClick = onCardClick
         this.controlsElt = {
             infosRestaurant: container
         }
     }
 
-    displayCards() {
+    displayCards(restaurants) {
         this.controlsElt.infosRestaurant.empty()
-        for (let i = 0; i < this.restaurants.length; i++) {
-            this.controlsElt.infosRestaurant.append( this.createCard(this.restaurants[i]));
+        for (let i = 0; i < restaurants.length; i++) {
+            this.controlsElt.infosRestaurant.append( this.createCard(restaurants[i]));
         }
-        $('.info-card-restaurant').click(function(){
-            $(this).addClass('active').siblings('.info-card-restaurant').removeClass('active')
-        })
+    }
+
+    setSelectedCard(restaurant) {
+        $(restaurant.card).addClass('active').siblings('.info-card-restaurant').removeClass('active')
     }
 
     /**
@@ -71,7 +70,8 @@ class InterfaceCards {
 
         restaurantCardRight.append(restaurantCardRightMain, restaurantCardRightRatingContainer)
 
-        return restaurantCard.append(restaurantCardLeft, restaurantCardRight)
+        restaurantCard.append(restaurantCardLeft, restaurantCardRight)
+        return restaurant.card = restaurantCard
     }
 
     /**

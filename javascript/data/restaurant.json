@@ -5,6 +5,7 @@
     "phone": "0648775921",
     "lat":50.738027916229676,
     "long":2.7343629634937594,
+    "type": ["Mexicain"],
     "image": null,
     "ratings":[
       {
@@ -30,6 +31,7 @@
     "phone": "0642795921",
     "lat":50.73887714197143,
     "long":2.7333259642471233,
+    "type": ["Mexicain","Brasserie"],
     "image": null,
     "ratings":[
       {
@@ -50,6 +52,7 @@
     "phone": "0614871232",
     "lat":50.7391801360158,
     "long":2.733570715821261,
+    "type": ["Mexicain","Brasserie"],
     "image": null,
     "ratings":[
       {
@@ -70,6 +73,7 @@
     "phone": "078495682",
     "lat":50.73911223836117,
     "long":2.7339100152595446,
+    "type": ["Mexicain","Brasserie"],
     "image": null,
     "ratings":[
       {
@@ -106,6 +110,7 @@
     "phone": "0782154896",
     "lat":50.73936339918706,
     "long":2.734066428949045,
+    "type": ["Mexicain","Brasserie"],
     "image": null,
     "ratings":[
       {
@@ -126,6 +131,7 @@
     "phone": "0748219534",
     "lat":50.73930515754798,
     "long":2.7360614375641896,
+    "type": ["Mexicain","Brasserie"],
     "image": null,
     "ratings":[
       {
@@ -146,6 +152,7 @@
     "phone": "0327845902",
     "lat":50.73940413577366,
     "long":2.7359554147160776,
+    "type": ["Mexicain","Brasserie"],
     "image": null,
     "ratings":[
       {

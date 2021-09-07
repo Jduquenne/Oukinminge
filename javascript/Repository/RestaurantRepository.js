@@ -1,35 +1,30 @@
 import { Restaurant } from "../Models/Restaurant.js";
 
+const FILE_REPOSITORY_URL = "./javascript/data/restaurant.json";
+
 class RestaurantRepository {
 
-    /**
-     *
-     * @param {string} url
-     * @returns {Promise<*[]>}
-     */
-    async findAllRestaurants(url) {
-        const restaurants = []
-
-        const response = await fetch(url);
-        const data = await response.json();
-
-        data.forEach((restaurant) => {
-            restaurants.push(new Restaurant(restaurant.name, restaurant.adress, restaurant.phone, restaurant.lat, restaurant.long, restaurant.image, restaurant.ratings))
-        })
-        return restaurants
+    constructor() {
+        this.inMemoryRestaurant = [];
     }
 
-    async findRestaurantsByRange(url, range) {
+
+    async findRestaurants(min=0,max=5) {
         const restaurants = []
 
-        const response = await fetch(url);
-        const data = await response.json();
+        const response = await fetch(FILE_REPOSITORY_URL);
+        let data = await response.json();
 
+        // data = data.merge(this.inMemoryRestaurant)
         data.forEach((restaurant) => {
-            restaurants.push(new Restaurant(restaurant.name, restaurant.adress, restaurant.phone, restaurant.lat, restaurant.long, restaurant.image, restaurant.ratings))
+            restaurants.push(new Restaurant(restaurant.name, restaurant.adress, restaurant.phone, restaurant.lat, restaurant.long, restaurant.type, restaurant.image, restaurant.ratings))
         })
 
-        return restaurants.filter(restaurant => { return restaurant.average > range.min && restaurant.average < range.max })
+        return restaurants.filter(restaurant => { return restaurant.average >= min && restaurant.average <= max })
+    }
+
+    addInMemoryRestaurant(restaurant){
+        this.inMemoryRestaurant.push(restaurant)
     }
 
 }

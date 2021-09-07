@@ -5,7 +5,7 @@ class InterfaceMap {
      * @param {Array} restaurants
      * @param {Function} onMarkerClick
      */
-    constructor(mapParams, restaurants, onMarkerClick) {
+    constructor(mapParams, onMarkerClick) {
         this.map = new google.maps.Map(mapParams.container, {
             zoom: mapParams.zoom,
             center:  mapParams.position,
@@ -15,19 +15,22 @@ class InterfaceMap {
             fullscreenControl: mapParams.fullscreenControl,
         })
 
-        this.restaurants = restaurants
         this.markers = []
         this.onMarkerClick = onMarkerClick
         this.markerSelected = false
     }
 
-    async initMap() {
+    async initMap(restaurants) {
         this.getLocalisation()
-        this.displayMarkers()
+        this.displayMarkers(restaurants)
     }
 
-    displayMarkers() {
-        for (let restaurant of this.restaurants) {
+    displayMarkers(restaurants) {
+        // Clear out the old markers.
+        this.markers.forEach((marker) => {
+            marker.setMap(null);
+        });
+        for (let restaurant of restaurants) {
             this.addMarker(restaurant)
         }
     }
@@ -49,6 +52,14 @@ class InterfaceMap {
         this.markers.push(restaurant.marker)
 
         return restaurant.marker
+    }
+
+    setZoom(number) {
+        this.map.setZoom(number)
+    }
+
+    setCenterTo(restaurant){
+        this.map.panTo(restaurant.marker.positionForPanTo);
     }
 
     getLocalisation() {
