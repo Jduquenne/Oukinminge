@@ -1,0 +1,55 @@
+.app {
+    display: flex;
+    flex-direction: column;
+}
+
+.header-container {
+    display: flex;
+    width: 100vw;
+    height: 75px;
+    background-color: #FFFFFF;
+    -webkit-box-shadow: 0 0 15px -6px rgba(0,0,0,0.98);
+    box-shadow: 0 0 15px -6px rgba(0,0,0,0.98);
+    position: relative;
+    z-index: 3;
+}
+
+.header-container .brand {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 300px;
+}
+
+.header-container .brand .fa-utensils {
+    position: relative;
+    padding: 0 10px 0 0;
+    font-size: 35px;
+    border-right: 2px solid #0D0D0D;
+}
+
+.header-container .brand h1 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 2.7em;
+    margin: -4px 6px 0 8px;
+}
+
+.header-container .brand h1 span {
+    font-family: 'Oswald ExtraLight', sans-serif;
+    color: var(--dark);
+}
+
+.header-container .spacer-15 {
+    width: 15px;
+}
+
+.header-container .spacer-20 {
+    width: 20px;
+}
+
+
+
+.main {
+    display: flex;
+    width: 100vw;
+}

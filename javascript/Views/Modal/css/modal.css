@@ -1,0 +1,12 @@
+.main .overlay-container {
+    position: absolute;
+    left: 300px;
+    top: -200px;
+    z-index: 0;
+    height: 200px;
+    width: calc(100% - 300px);
+    background-color: #F1F3F4;
+    border-bottom: #A3AFBF 1px solid ;
+    transition: top 0.5s ease-out;
+}
+

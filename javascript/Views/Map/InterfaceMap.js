@@ -2,10 +2,10 @@ class InterfaceMap {
     /**
      *
      * @param {Object} mapParams
-     * @param {Array} restaurants
      * @param {Function} onMarkerClick
+     * @param {Function} onMapClick
      */
-    constructor(mapParams, onMarkerClick) {
+    constructor(mapParams, onMarkerClick, onMapClick) {
         this.map = new google.maps.Map(mapParams.container, {
             zoom: mapParams.zoom,
             center:  mapParams.position,
@@ -14,9 +14,10 @@ class InterfaceMap {
             streetViewControl: mapParams.streetViewControl,
             fullscreenControl: mapParams.fullscreenControl,
         })
-
         this.markers = []
         this.onMarkerClick = onMarkerClick
+        this.onMapClick = onMapClick
+        this.mapListener = null
         this.markerSelected = false
     }
 
@@ -31,11 +32,34 @@ class InterfaceMap {
             marker.setMap(null);
         });
         for (let restaurant of restaurants) {
-            this.addMarker(restaurant)
+            this.createMarkerWithRestaurant(restaurant)
         }
     }
 
-    addMarker(restaurant) {
+    setMapListener() {
+        this.mapListener = google.maps.event.addListener(this.map,'click', (position) => {
+            this.createMarkerWithPosition(position.latLng)
+            this.onMapClick(position)
+            google.maps.event.removeListener(this.mapListener)
+        })
+    }
+
+    removeMapListener() {
+        google.maps.event.removeListener(this.mapListener)
+    }
+
+    createMarkerWithPosition(position) {
+        let marker = new google.maps.Marker({
+            position: position,
+            positionForPanTo: new google.maps.LatLng(position.lat + 0.0006, position.long),
+            map: this.map
+        });
+        this.markers.push(marker)
+        this.map.panTo(position)
+        this.map.setZoom(17)
+    }
+
+    createMarkerWithRestaurant(restaurant) {
         const restaurantLatLng = new google.maps.LatLng(restaurant.lat, restaurant.long);
 
         restaurant.marker = new google.maps.Marker({

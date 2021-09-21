@@ -8,17 +8,16 @@ class Restaurant {
      * @param {number} lat
      * @param {number} long
      * @param {string} type
-     * @param {string} image
      * @param {Object} ratings
      */
-    constructor(name, adress, phone, lat, long, type, image, ratings) {
+    constructor(name, adress, phone, lat, long, type, ratings) {
         this.name = name
         this.adress = adress
         this.phone = phone
         this.lat = lat
         this.long = long
         this.type = type
-        this.image = image
+        this.image = null
         this.ratings = ratings
         this.marker = null
         this.card = null

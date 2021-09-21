@@ -1,0 +1,30 @@
+.main .btn-add-restaurant {
+    position: absolute;
+    bottom: 30px;
+    left: 330px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #EA4335;
+    color: #F1F3F4;
+    border-radius: 50%;
+    height: 81px;
+    width: 81px;
+    font-size: 70px;
+    font-family: 'Oswald', sans-serif;
+    z-index: 5;
+    transition: all 0.5s ease-out;
+}
+.main .btn-add-restaurant:hover {
+    background-color: #EA0235;
+    font-family: 'Oswald', sans-serif;
+    cursor: pointer;
+    z-index: 5;
+}
+
+.main .btn-add-restaurant:focus {
+    background-color: #EA0235;
+    font-family: 'Oswald', sans-serif;
+    cursor: pointer;
+    z-index: 5;
+}

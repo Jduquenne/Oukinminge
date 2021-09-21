@@ -1,6 +1,6 @@
-import { GOOGLE_MAP_API_KEY } from "../config.js";
+import { GOOGLE_MAP_API_KEY } from "../../config.js";
 
-class InterfaceModal{
+class InterfaceRestaurantInfos {
     constructor(container, onClickClose) {
         this.controlsElt = {
             overlayContainer: container,
@@ -19,8 +19,13 @@ class InterfaceModal{
         this.isOpen = false
     }
 
+    setHeightForRestaurantInfos() {
+        this.controlsElt.overlayContainer.css({ height: '250px' })
+    }
+
     showModal() {
         if (!this.isOpen) {
+            this.setHeightForRestaurantInfos()
             this.controlsElt.overlayContainer.css({ top: '75px'})
             this.setOpen()
         }
@@ -29,6 +34,7 @@ class InterfaceModal{
     hideModal() {
         if (this.isOpen) {
             this.controlsElt.overlayContainer.css({ top: '-200px'})
+            this.controlsElt.overlayContainer.empty()
             $('.info-card-restaurant').removeClass('active')
             this.setClose()
         }
@@ -38,13 +44,13 @@ class InterfaceModal{
         if (restaurant) {
             this.controlsElt.overlayContainer.empty()
             this.generateInfosRestaurant(restaurant)
-            this.generateComments(restaurant.ratings)
         }
     }
 
     generateInfosRestaurant (restaurant) {
         const streetViewUrl = `https://maps.googleapis.com/maps/api/streetview?location=${restaurant.lat},${restaurant.long}&size=250x250&key=${GOOGLE_MAP_API_KEY}`
 
+        const overlayRestaurantInfos = $("<div class='overlay-restaurant-infos'></div>")
         const overlayImgContainer = $("<div class='overlay-restaurant-img-container'></div>")
         const overlayImg = $(`<img src='${streetViewUrl}' alt='${restaurant.name}'/>`)
         overlayImgContainer.append(overlayImg)
@@ -91,8 +97,9 @@ class InterfaceModal{
             this.hideModal()
             this.onClickClose(restaurant)
         })
+        overlayRestaurantInfos.append(overlayImgContainer, overlayInfosContainer,overlayCloseModal, this.generateComments(restaurant.ratings))
 
-        this.controlsElt.overlayContainer.append(overlayImgContainer, overlayInfosContainer,overlayCloseModal)
+        this.controlsElt.overlayContainer.append(overlayRestaurantInfos)
     }
 
     generateComments (ratings) {
@@ -105,7 +112,7 @@ class InterfaceModal{
             overlayCommentsContainer.append(this.generateOneComment(ratings[i]))
         }
 
-        return this.controlsElt.overlayContainer.append(overlayCommentsContainer)
+        return overlayCommentsContainer
     }
 
     generateOneComment (rating) {
@@ -147,4 +154,4 @@ class InterfaceModal{
 
 }
 
-export { InterfaceModal }
+export { InterfaceRestaurantInfos }

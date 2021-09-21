@@ -1,0 +1,197 @@
+.main .overlay-container .overlay-restaurant-infos {
+    display: flex;
+    height: 100%;
+    width: 100%;
+}
+
+.main .overlay-container .overlay-restaurant-infos .overlay-restaurant-img-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20vw;
+    height: 100%;
+}
+
+.main .overlay-container .overlay-restaurant-infos .overlay-restaurant-img-container img {
+    height: 90%;
+    width: 90%;
+    border-radius: 5px;
+    object-fit: cover;
+}
+
+.main .overlay-container .overlay-restaurant-infos .overlay-restaurant-infos-container {
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    height: calc(100% - 15px);
+    margin-top: 15px;
+}
+
+.main .overlay-container .overlay-restaurant-infos .overlay-restaurant-infos-container .overlay-restaurant-infos-name {
+    font-family: 'Oswald', sans-serif;
+    font-size: 23px;
+    font-weight: bold;
+    width: 100%;
+}
+
+.main .overlay-container .overlay-restaurant-infos .overlay-restaurant-infos-container .overlay-restaurant-infos-coord-container {
+    display: flex;
+    font-family: 'Oswald', sans-serif;
+    font-size: 20px;
+    font-weight: normal;
+    width: 100%;
+    margin-top: 5px;
+}
+
+.main .overlay-container .overlay-restaurant-infos .overlay-restaurant-infos-container .overlay-restaurant-infos-coord-container .overlay-restaurant-infos-coord {
+    width: 60%;
+}
+
+.main .overlay-container .overlay-restaurant-infos .overlay-restaurant-infos-container .overlay-restaurant-infos-coord-container .overlay-restaurant-infos-coord .overlay-restaurant-infos-coord-adress {
+    font-family: 'Oswald', sans-serif;
+    font-size: 19px;
+}
+
+.main .overlay-container .overlay-restaurant-infos .overlay-restaurant-infos-container .overlay-restaurant-infos-coord-container .overlay-restaurant-infos-coord .overlay-restaurant-infos-coord-phone {
+    font-weight: lighter;
+    margin-top: 5px;
+}
+
+.main .overlay-container .overlay-restaurant-infos .overlay-restaurant-infos-container .overlay-restaurant-infos-ratings-container {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.main .overlay-container .overlay-restaurant-infos .overlay-restaurant-infos-container .overlay-restaurant-infos-ratings-container .overlay-restaurant-infos-average {
+    font-family: 'Oswald', sans-serif;
+    font-size: 16px;
+    font-weight: lighter;
+    width: 25px;
+}
+
+.main .overlay-container .overlay-restaurant-infos .overlay-restaurant-infos-container .overlay-restaurant-infos-ratings-container .overlay-restaurant-infos-stars-container {
+    display: flex;
+    align-items: center;
+    font-size: 1em;
+    margin-right: 10px;
+}
+
+.main .overlay-container .overlay-restaurant-infos .overlay-restaurant-infos-container .overlay-restaurant-infos-ratings-container .overlay-restaurant-infos-stars-container .overlay-restaurant-infos-stars-back {
+    display: flex;
+    color: #0D0D0D;
+    position: relative;
+}
+
+.main .overlay-container .overlay-restaurant-infos .overlay-restaurant-infos-container .overlay-restaurant-infos-ratings-container .overlay-restaurant-infos-stars-container .overlay-restaurant-infos-stars-front {
+    display: flex;
+    color: #EA4335;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    transition: all 0.5s;
+}
+
+.main .overlay-container .overlay-restaurant-infos .overlay-restaurant-infos-container .overlay-restaurant-infos-ratings-container .overlay-restaurant-infos-comment {
+    font-family: 'Oswald', sans-serif;
+    font-size: 16px;
+    font-weight: lighter;
+    width: 50px;
+}
+
+.main .overlay-container .overlay-restaurant-infos .overlay-restaurant-infos-container .overlay-restaurant-infos-type {
+    font-family: 'Oswald', sans-serif;
+    font-size: 19px;
+    font-weight: lighter;
+    margin-top: 5px;
+}
+
+.main .overlay-container .overlay-restaurant-infos .overlay-restaurant-comments-container {
+    background-color: #ffffff;
+    padding-left: 15px;
+    width: calc(100% - 20vw - 30%);
+    height: 100%;
+    overflow: auto;
+}
+
+.main .overlay-container .overlay-restaurant-infos .overlay-restaurant-comments-container::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color: #F5F5F5;
+}
+
+.main .overlay-container .overlay-restaurant-infos .overlay-restaurant-comments-container::-webkit-scrollbar {
+    width: 8px;
+    background-color: #F5F5F5;
+}
+
+.main .overlay-container .overlay-restaurant-infos .overlay-restaurant-comments-container::-webkit-scrollbar-thumb
+{
+    background-color: var(--dark);
+}
+
+.main .overlay-container .overlay-restaurant-infos .overlay-restaurant-comments-container .overlay-restaurant-comments {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /*height: calc((100% - (10% + 15px + 15px)) / 2);*/
+    width: 85%;
+    margin: 10px 0;
+}
+
+.main .overlay-container .overlay-restaurant-infos .overlay-restaurant-comments-container .overlay-restaurant-comments:first-child {
+    margin-top: 35px;
+}
+
+.main .overlay-container .overlay-restaurant-infos .overlay-restaurant-comments-container .overlay-restaurant-comments-title {
+    font-family: 'Oswald', sans-serif;
+    font-size: 20px;
+    font-weight: normal;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    height: 10%;
+}
+
+.main .overlay-container .overlay-restaurant-infos .overlay-restaurant-comments-container .overlay-restaurant-comments .overlay-restaurant-comments-top {
+    display: flex;
+    justify-content: space-between;
+    height: 15%;
+}
+
+.main .overlay-container .overlay-restaurant-infos .overlay-restaurant-comments-container .overlay-restaurant-comments .overlay-restaurant-comments-top .overlay-restaurant-comments-top-name {
+    font-family: 'Oswald', sans-serif;
+    font-size: 14px;
+    font-weight: normal;
+}
+
+.main .overlay-container .overlay-restaurant-infos .overlay-restaurant-comments-container .overlay-restaurant-comments .overlay-restaurant-comments-top .overlay-restaurant-comments-top-rating {
+    font-family: 'Oswald', sans-serif;
+    font-size: 14px;
+    font-weight: normal;
+}
+
+.main .overlay-container .overlay-restaurant-infos .overlay-restaurant-close {
+    font-family: 'Oswald', sans-serif;
+    font-size: 18px;
+    font-weight: normal;
+    position: relative;
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
+}
+
+.main .overlay-container .overlay-restaurant-infos .overlay-restaurant-comments-container .overlay-restaurant-comments .overlay-restaurant-comments-content {
+    font-family: 'Oswald', sans-serif;
+    font-size: 15px;
+    font-weight: lighter;
+    margin-top: 10px;
+    width: 85%;
+    margin-bottom: 5px;
+    word-break: break-word;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    line-height: 17px;
+    max-height: 50px;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}

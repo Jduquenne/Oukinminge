@@ -8,18 +8,17 @@ class RestaurantRepository {
         this.inMemoryRestaurant = [];
     }
 
-
-    async findRestaurants(min=0,max=5) {
-        const restaurants = []
+    async findRestaurants(min= 0,max= 5) {
+        let restaurants = []
 
         const response = await fetch(FILE_REPOSITORY_URL);
         let data = await response.json();
-
-        // data = data.merge(this.inMemoryRestaurant)
         data.forEach((restaurant) => {
-            restaurants.push(new Restaurant(restaurant.name, restaurant.adress, restaurant.phone, restaurant.lat, restaurant.long, restaurant.type, restaurant.image, restaurant.ratings))
+            restaurants.push(new Restaurant(restaurant.name, restaurant.adress, restaurant.phone, restaurant.lat, restaurant.long, restaurant.type, restaurant.ratings))
         })
-
+        if (this.inMemoryRestaurant.length !== 0) {
+            restaurants = this.inMemoryRestaurant.concat(restaurants)
+        }
         return restaurants.filter(restaurant => { return restaurant.average >= min && restaurant.average <= max })
     }
 
@@ -29,4 +28,4 @@ class RestaurantRepository {
 
 }
 
-export {RestaurantRepository}
+export { RestaurantRepository }

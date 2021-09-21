@@ -31,109 +31,40 @@
                 </div>
             </div>
             <div class="spacer-20"></div>
-            <div class="selectRating">
-<!--                <select>-->
-<!--                    <option value="0" class="hide">Note</option>-->
-<!--                    <option value="1">1</option>-->
-<!--                    <option value="2">2</option>-->
-<!--                    <option value="3">3</option>-->
-<!--                    <option value="4">4</option>-->
-<!--                    <option value="5">5</option>-->
-<!--                </select>-->
-            </div>
+            <div class="selectRating"></div>
         </div>
     </header>
     <div class="main">
         <div class="left-menu">
-            <div class="infos-restaurant">
-<!--                <div class="info-card-restaurant">-->
-<!--                    <div class="info-card-restaurant-left"><img-->
-<!--                            src="https://maps.googleapis.com/maps/api/streetview?location=50.738027916229676,2.7343629634937594&amp;size=250x250&amp;key=AIzaSyCKGsWfoTU9625KJ3MayRRpdqqC0Sboa9g"-->
-<!--                            alt="Au Flamand Gourmand"></div>-->
-<!--                    <div class="info-card-restaurant-right">-->
-<!--                        <div class="info-card-restaurant-main">-->
-<!--                            <div class="info-card-restaurant-name">Au Flamand Gourmand</div>-->
-<!--                            <div class="info-card-restaurant-adress">23 Rue Saint-Jacques,<br> 59270 Bailleul</div>-->
-<!--                        </div>-->
-<!--                        <div class="info-card-restaurant-rate">Note : 4.2</div>-->
-<!--                    </div>-->
-<!--                </div>-->
-            </div>
+            <div class="infos-restaurant"></div>
         </div>
         <div id="map"></div>
-        <div class="overlay-restaurant-container">
-<!--            <div class="overlay-restaurant-img-container">-->
-<!--                <img src="https://media-cdn.tripadvisor.com/media/photo-s/0e/1b/4b/eb/flemish-beef-stew-with.jpg" alt="">-->
-<!--            </div>-->
-<!--            <div class="overlay-restaurant-infos-container">-->
-<!--                <div class="overlay-restaurant-infos-name">Au Flamand Gourmand</div>-->
-<!--                <div class="overlay-restaurant-infos-coord-container">-->
-<!--                    <div class="overlay-restaurant-infos-coord">-->
-<!--                        <div class="overlay-restaurant-infos-coord-adress">23 Rue Saint-Jacques,<br> 59270 Bailleul</div>-->
-<!--                        <div class="overlay-restaurant-infos-coord-phone">06.85.95.84.85</div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <div class="overlay-restaurant-infos-ratings-container">-->
-<!--                    <div class="overlay-restaurant-infos-average">4.2</div>-->
-<!--                    <div class="overlay-restaurant-infos-stars-container">-->
-<!--                        <div class="overlay-restaurant-infos-stars-back">-->
-<!--                            <i class="fa fa-star" aria-hidden="true"></i>-->
-<!--                            <i class="fa fa-star" aria-hidden="true"></i>-->
-<!--                            <i class="fa fa-star" aria-hidden="true"></i>-->
-<!--                            <i class="fa fa-star" aria-hidden="true"></i>-->
-<!--                            <i class="fa fa-star" aria-hidden="true"></i>-->
-
-<!--                            <div class="overlay-restaurant-infos-stars-front" style="width: 57%">-->
-<!--                                <i class="fa fa-star" aria-hidden="true"></i>-->
-<!--                                <i class="fa fa-star" aria-hidden="true"></i>-->
-<!--                                <i class="fa fa-star" aria-hidden="true"></i>-->
-<!--                                <i class="fa fa-star" aria-hidden="true"></i>-->
-<!--                                <i class="fa fa-star" aria-hidden="true"></i>-->
-<!--                            </div>-->
+        <div class="overlay-container">
+<!--            <div class="overlay-add-restaurant">-->
+<!--                <h2>Ajouter un restaurant</h2>-->
+<!--                <form class="overlay-add-restaurant-forms">-->
+<!--                    <div class="overlay-add-restaurant-forms-container">-->
+<!--                        <div class="overlay-add-restaurant-form">-->
+<!--                            <input required id="restaurantName" type="text" placeholder="Nom du restaurant">-->
+<!--                        </div>-->
+<!--                        <div class="overlay-add-restaurant-form">-->
+<!--                            <input required id="restaurantPhone" type="text" placeholder="Numéro de téléphone">-->
 <!--                        </div>-->
 <!--                    </div>-->
-<!--                    <div class="overlay-restaurant-infos-comment">245 avis</div>-->
-<!--                </div>-->
-<!--                <div class="overlay-restaurant-infos-type">Restaurant, Brasserie</div>-->
-<!--            </div>-->
-<!--            <div class="overlay-restaurant-close">X</div>-->
-<!--            <div class="overlay-restaurant-comments-container">-->
-<!--                <div class="overlay-restaurant-comments-title">Commentaires</div>-->
-<!--                <div class="overlay-restaurant-comments">-->
-<!--                    <div class="overlay-restaurant-comments-top">-->
-<!--                        <div class="overlay-restaurant-comments-top-name">Papa Noel</div>-->
-<!--                        <div class="overlay-restaurant-comments-top-rating">4.2</div>-->
-<!--                    </div>-->
-<!--                    <div class="overlay-restaurant-comments-content">-->
-<!--                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto asperiores, culpa-->
-<!--                            cumque deserunt dolor esse facere fugiat itaque iusto laudantium molestiae molestias-->
-<!--                            officiis praesentium provident reprehenderit tempore temporibus veniam vero.-->
-
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <div class="overlay-restaurant-comments">-->
-<!--                    <div class="overlay-restaurant-comments-top">-->
-<!--                        <div class="overlay-restaurant-comments-top-name">Jason Duquenne</div>-->
-<!--                        <div class="overlay-restaurant-comments-top-rating">4.2</div>-->
-<!--                    </div>-->
-<!--                    <div class="overlay-restaurant-comments-content">-->
-<!--                        <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto asperiores, culpa-->
-<!--                            cumque deserunt dolor esse .-->
+<!--                    <div class="overlay-add-restaurant-forms-container">-->
+<!--                        <div class="overlay-add-restaurant-form">-->
+<!--                            <input required id="restaurantStreet" type="text" placeholder="Adresse">-->
+<!--                        </div>-->
+<!--                        <div class="overlay-add-restaurant-form">-->
+<!--                            <input required id="restaurantTown" type="text" placeholder="Ville">-->
+<!--                            <input required id="restaurantZipCode" type="text" placeholder="Code postal">-->
 <!--                        </div>-->
 <!--                    </div>-->
-<!--                </div>-->
-<!--                <div class="overlay-restaurant-comments">-->
-<!--                    <div class="overlay-restaurant-comments-top">-->
-<!--                        <div class="overlay-restaurant-comments-top-name">Vanessa Platevoet</div>-->
-<!--                        <div class="overlay-restaurant-comments-top-rating">4.2</div>-->
+<!--                    <div class="overlay-add-restaurant-forms-container">-->
+<!--                        <button id="add" type="submit">Ajouter</button>-->
+<!--                        <div class="button-cancel" id="cancel">Annuler</div>-->
 <!--                    </div>-->
-<!--                    <div class="overlay-restaurant-comments-content">-->
-<!--                        <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto asperiores, culpa-->
-<!--                            cumque deserunt dolor esse facere fugiat itaque iusto laudantium molestiae molestias-->
-<!--                            officiis praesentium provident .-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
+<!--                </form>-->
 <!--            </div>-->
         </div>
     </div>

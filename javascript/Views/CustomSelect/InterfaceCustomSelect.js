@@ -5,7 +5,7 @@ class InterfaceCustomSelect {
         }
         this.maxRating = 5
         this.onSelectHandler = onSelectHandler;
-
+        this.displayCustomSelect()
     }
 
     displayCustomSelect() {

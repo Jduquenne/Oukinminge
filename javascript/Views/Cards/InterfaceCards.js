@@ -1,4 +1,4 @@
-import { GOOGLE_MAP_API_KEY } from "../config.js";
+import { GOOGLE_MAP_API_KEY } from "../../config.js";
 
 class InterfaceCards {
 
@@ -23,6 +23,10 @@ class InterfaceCards {
 
     setSelectedCard(restaurant) {
         $(restaurant.card).addClass('active').siblings('.info-card-restaurant').removeClass('active')
+    }
+
+    removeActiveAllCards() {
+        $('.info-card-restaurant').removeClass('active')
     }
 
     /**
