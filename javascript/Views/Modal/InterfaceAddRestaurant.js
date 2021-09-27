@@ -1,5 +1,5 @@
 class InterfaceAddRestaurant {
-    constructor(container, onClickCancel) {
+    constructor(container, onClickCancel, onClickAdd) {
         this.controlsElt = {
             overlayContainer: container,
             closeModal: $('.overlay-restaurant-close'),
@@ -7,6 +7,7 @@ class InterfaceAddRestaurant {
         }
         this.isOpen = false
         this.onClickCancel = onClickCancel
+        this.onClickAdd = onClickAdd
     }
 
     setOpen () {
@@ -41,7 +42,7 @@ class InterfaceAddRestaurant {
     generateAddForm() {
         const overlayAddRestaurant = $('<div class="overlay-add-restaurant"></div>')
         const overlayAddRestaurantTitle = $('<h2>Ajouter un restaurant</h2>')
-        const overlayAddRestaurantForms = $('<form class="overlay-add-restaurant-forms"></form>')
+        const overlayAddRestaurantForms = $('<form class="overlay-add-restaurant-forms" onsubmit="return false"></form>')
 
         const overlayAddRestaurantFormsContainerFirst = $('<div class="overlay-add-restaurant-forms-container"></div>')
         const overlayAddRestaurantFormName = $('<div class="overlay-add-restaurant-form"></div>')
@@ -54,11 +55,16 @@ class InterfaceAddRestaurant {
         const overlayAddRestaurantFormStreet = $('<div class="overlay-add-restaurant-form"></div>')
         overlayAddRestaurantFormStreet.append(this.generateOneInput('restaurantStreet', 'Adresse'))
         const overlayAddRestaurantFormTownZip = $('<div class="overlay-add-restaurant-form"></div>')
-        overlayAddRestaurantFormTownZip.append(this.generateOneInput('restaurantTown', 'Ville'), this.generateOneInput('restaurantZipCode', 'Code postal'))
+        const overlayAddRestaurantFormTown = this.generateOneInput('restaurantTown', 'Ville')
+        const overlayAddRestaurantFormZip = this.generateOneInput('restaurantZipCode', 'Code postal')
+        overlayAddRestaurantFormTownZip.append(overlayAddRestaurantFormTown, overlayAddRestaurantFormZip)
         overlayAddRestaurantFormsContainerSecond.append(overlayAddRestaurantFormStreet, overlayAddRestaurantFormTownZip)
 
         const overlayAddRestaurantFormsContainerThird = $('<div class="overlay-add-restaurant-forms-container"></div>')
         const overlayAddRestaurantFormsAddButton = $('<button id="add" type="submit">Ajouter</button>')
+        overlayAddRestaurantFormsAddButton.on('click', () => {
+            this.onClickAdd()
+        })
         const overlayAddRestaurantFormsCancelButton = $('<div class="button-cancel" id="cancel">Annuler</div>')
         overlayAddRestaurantFormsCancelButton.on('click', () => {
             this.hideModal()
@@ -73,14 +79,14 @@ class InterfaceAddRestaurant {
     }
 
     generateOneInput(id, placeholder) {
-        return $(`<input required id="${id}" type="text" placeholder="${placeholder}">`)
+        return $(`<input id="${id}" type="text" placeholder="${placeholder}">`)
     }
 
     generateInstructions() {
         const overlayAddRestaurant = $('<div class="overlay-add-restaurant"></div>')
 
         const overlayAddRestaurantTitle = $('<h2>Ajouter un restaurant</h2>')
-        const overlayAddRestaurantInstructions = $('<p>Instructions</p>')
+        const overlayAddRestaurantInstructions = $('<p class="overlay-add-restaurant-instructions">Pour ajouter un restaurant, cliquez sur la carte pour définir la position du restaurant ...</p>')
 
         overlayAddRestaurant.append(overlayAddRestaurantTitle, overlayAddRestaurantInstructions)
         this.controlsElt.overlayContainer.append(overlayAddRestaurant)

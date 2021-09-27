@@ -27,7 +27,6 @@ class InterfaceMap {
     }
 
     displayMarkers(restaurants) {
-        // Clear out the old markers.
         this.markers.forEach((marker) => {
             marker.setMap(null);
         });

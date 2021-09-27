@@ -17,35 +17,35 @@ class InterfaceAddButtonRestaurant {
         this.btnState = 0
     }
 
-    setButtonOpenInstruction() {
-        this.btnState = 0
-    }
-
-    setButtonHideInstruction() {
-        this.btnState = 1
-    }
-
-    setButtonHideAddRestaurantForm() {
-        this.btnState = 2
-    }
-
     displayAddButtonRestaurant() {
         this.handleAddRestaurantClick(this.controlElt.buttonAddRestaurant)
         this.controlElt.main.append(this.controlElt.buttonAddRestaurant)
     }
 
+    setButtonOpenInstruction() {
+        this.btnState = 0
+        this.handleAddRestaurantClick(this.controlElt.buttonAddRestaurant)
+    }
+
+    setButtonHideInstruction() {
+        this.btnState = 1
+        this.handleAddRestaurantClick(this.controlElt.buttonAddRestaurant)
+    }
+
+    setButtonHideAddRestaurantForm() {
+        this.btnState = 2
+        this.handleAddRestaurantClick(this.controlElt.buttonAddRestaurant)
+    }
+
     handleAddRestaurantClick(element) {
         switch (this.btnState) {
             case 0:
-                console.log(this.btnState)
                 this.showInstructions(element)
                 break
             case 1:
-                console.log(this.btnState)
                 this.hideAddRestaurantInstructions(element)
                 break
             case 2:
-                console.log(this.btnState)
                 this.hideAddRestaurantForm(element)
                 break
         }
@@ -60,14 +60,12 @@ class InterfaceAddButtonRestaurant {
     hideAddRestaurantInstructions(element) {
         element.off('click').on('click', () => {
             this.resetAddRestaurantInstructions()
-
         })
     }
 
     hideAddRestaurantForm(element) {
         element.off('click').on('click', () => {
             this.resetAddRestaurant()
-            console.log('je me suis trompé de position')
         })
     }
 }

@@ -72,21 +72,32 @@ class InterfaceRestaurantInfos {
 
         const overlayInfosRating = $(`<div class='overlay-restaurant-infos-average'>${restaurant.average}</div>`)
 
-        const overlayInfosStarsContainer = $("<div class='overlay-restaurant-infos-stars-container'></div>")
-        const overlayInfosStarsBack = $("<div class='overlay-restaurant-infos-stars-back'></div>")
-        const overlayInfosStarsFront = $(`<div class='overlay-restaurant-infos-stars-front' style='width: ${restaurant.average * 20}%'></div>`)
 
-        overlayInfosStarsContainer.append(overlayInfosStarsBack)
-        overlayInfosStarsBack.append(overlayInfosStarsFront)
-
-        for (let i = 0; i < 5; i++) {
-            overlayInfosStarsBack.append($("<i class='fa fa-star' aria-hidden='true'></i>"))
-            overlayInfosStarsFront.append($("<i class='fa fa-star' aria-hidden='true'></i>"))
+        if (restaurant.ratings){
+            const overlayInfosStarsContainer = $("<div class='overlay-restaurant-infos-stars-container'></div>")
+            const overlayInfosStarsBack = $("<div class='overlay-restaurant-infos-stars-back'></div>")
+            const overlayInfosStarsFront = $(`<div class='overlay-restaurant-infos-stars-front' style='width: ${restaurant.average * 20}%'></div>`)
+            overlayInfosStarsContainer.append(overlayInfosStarsBack)
+            overlayInfosStarsBack.append(overlayInfosStarsFront)
+            for (let i = 0; i < 5; i++) {
+                overlayInfosStarsBack.append($("<i class='fa fa-star' aria-hidden='true'></i>"))
+                overlayInfosStarsFront.append($("<i class='fa fa-star' aria-hidden='true'></i>"))
+            }
+            const overlayInfosCommentLength = $(`<div class='overlay-restaurant-infos-comment'>${restaurant.ratings.length} avis</div>`)
+            overlayInfosRatingContainer.append(overlayInfosRating, overlayInfosStarsContainer, overlayInfosCommentLength)
+        } else {
+            const overlayInfosStarsContainer = $("<div class='overlay-restaurant-infos-stars-container'></div>")
+            const overlayInfosStarsBack = $("<div class='overlay-restaurant-infos-stars-back'></div>")
+            const overlayInfosStarsFront = $(`<div class='overlay-restaurant-infos-stars-front' style='width: 0'></div>`)
+            overlayInfosStarsContainer.append(overlayInfosStarsBack)
+            overlayInfosStarsBack.append(overlayInfosStarsFront)
+            for (let i = 0; i < 5; i++) {
+                overlayInfosStarsBack.append($("<i class='fa fa-star' aria-hidden='true'></i>"))
+                overlayInfosStarsFront.append($("<i class='fa fa-star' aria-hidden='true'></i>"))
+            }
+            const overlayInfosCommentLength = $(`<div class='overlay-restaurant-infos-comment'>0 avis</div>`)
+            overlayInfosRatingContainer.append(overlayInfosRating, overlayInfosStarsContainer, overlayInfosCommentLength)
         }
-
-        const overlayInfosCommentLength = $(`<div class='overlay-restaurant-infos-comment'>${restaurant.ratings.length} avis</div>`)
-
-        overlayInfosRatingContainer.append(overlayInfosRating, overlayInfosStarsContainer, overlayInfosCommentLength)
 
         const overlayInfosType = $(`<div class="overlay-restaurant-infos-type">${this.typeToString(restaurant)}</div>`)
 
@@ -97,7 +108,11 @@ class InterfaceRestaurantInfos {
             this.hideModal()
             this.onClickClose(restaurant)
         })
-        overlayRestaurantInfos.append(overlayImgContainer, overlayInfosContainer,overlayCloseModal, this.generateComments(restaurant.ratings))
+        if (restaurant.ratings) {
+            overlayRestaurantInfos.append(overlayImgContainer, overlayInfosContainer,overlayCloseModal, this.generateComments(restaurant.ratings))
+        } else {
+            overlayRestaurantInfos.append(overlayImgContainer, overlayInfosContainer,overlayCloseModal, $("<div class='overlay-restaurant-comments-container'></div>"))
+        }
 
         this.controlsElt.overlayContainer.append(overlayRestaurantInfos)
     }
@@ -116,18 +131,21 @@ class InterfaceRestaurantInfos {
     }
 
     generateOneComment (rating) {
-        const overlayComment = $("<div class='overlay-restaurant-comments'></div>")
+        if (rating) {
+            const overlayComment = $("<div class='overlay-restaurant-comments'></div>")
 
-        const overlayCommentTop = $("<div class='overlay-restaurant-comments-top'></div>")
+            const overlayCommentTop = $("<div class='overlay-restaurant-comments-top'></div>")
 
-        const overlayCommentTopName = $(`<div class='overlay-restaurant-comments-top-name'>${rating.commentator}</div>`)
-        const overlayCommentTopRating = $(`<div class='overlay-restaurant-comments-top-rating'>${rating.stars}</div>`)
+            const overlayCommentTopName = $(`<div class='overlay-restaurant-comments-top-name'>${rating.commentator}</div>`)
+            const overlayCommentTopRating = $(`<div class='overlay-restaurant-comments-top-rating'>${rating.stars}</div>`)
 
-        overlayCommentTop.append(overlayCommentTopName, overlayCommentTopRating)
+            overlayCommentTop.append(overlayCommentTopName, overlayCommentTopRating)
 
-        const overlayCommentContent = $(`<div class='overlay-restaurant-comments-content'>${rating.comment}</div>`)
+            const overlayCommentContent = $(`<div class='overlay-restaurant-comments-content'>${rating.comment}</div>`)
 
-        return overlayComment.append(overlayCommentTop, overlayCommentContent)
+            return overlayComment.append(overlayCommentTop, overlayCommentContent)
+        }
+
     }
 
     /**

@@ -54,26 +54,47 @@ class InterfaceCards {
         const restaurantCardRightMainAdress = $(`<div class='info-card-restaurant-adress'>${this.formatAdressConvert(restaurant.adress)}</div>`)
         restaurantCardRightMain.append(restaurantCardRightMainName, restaurantCardRightMainAdress)
 
-        const restaurantCardRightRatingContainer = $("<div class='info-card-restaurant-rate-container'></div>")
+        if (restaurant.ratings) {
+            const restaurantCardRightRatingContainer = $("<div class='info-card-restaurant-rate-container'></div>")
 
-        const restaurantCardRightRating = $(`<div class='info-card-restaurant-rate'>${restaurant.average}</div>`)
+            const restaurantCardRightRating = $(`<div class='info-card-restaurant-rate'>${restaurant.average}</div>`)
 
-        const restaurantCardRightStarsContainer = $("<div class='info-card-restaurant-rate-stars-container'></div>")
-        const restaurantCardRightStarsBack = $("<div class='info-card-restaurant-rate-stars-back'></div>")
-        const restaurantCardRightStarsFront = $(`<div class='info-card-restaurant-rate-stars-front' style='width: ${restaurant.average * 20}%'></div>`)
+            const restaurantCardRightStarsContainer = $("<div class='info-card-restaurant-rate-stars-container'></div>")
+            const restaurantCardRightStarsBack = $("<div class='info-card-restaurant-rate-stars-back'></div>")
+            const restaurantCardRightStarsFront = $(`<div class='info-card-restaurant-rate-stars-front' style='width: ${restaurant.average * 20}%'></div>`)
 
-        restaurantCardRightStarsContainer.append(restaurantCardRightStarsBack)
-        restaurantCardRightStarsBack.append(restaurantCardRightStarsFront)
+            restaurantCardRightStarsContainer.append(restaurantCardRightStarsBack)
+            restaurantCardRightStarsBack.append(restaurantCardRightStarsFront)
 
-        for (let i = 0; i < 5; i++) {
-            restaurantCardRightStarsBack.append($("<i class='fa fa-star' aria-hidden='true'></i>"))
-            restaurantCardRightStarsFront.append($("<i class='fa fa-star' aria-hidden='true'></i>"))
+            for (let i = 0; i < 5; i++) {
+                restaurantCardRightStarsBack.append($("<i class='fa fa-star' aria-hidden='true'></i>"))
+                restaurantCardRightStarsFront.append($("<i class='fa fa-star' aria-hidden='true'></i>"))
+            }
+
+            restaurantCardRightRatingContainer.append(restaurantCardRightRating, restaurantCardRightStarsContainer)
+
+            restaurantCardRight.append(restaurantCardRightMain, restaurantCardRightRatingContainer)
+        } else {
+            const restaurantCardRightRatingContainer = $("<div class='info-card-restaurant-rate-container'></div>")
+
+            const restaurantCardRightRating = $(`<div class='info-card-restaurant-rate'>0</div>`)
+
+            const restaurantCardRightStarsContainer = $("<div class='info-card-restaurant-rate-stars-container'></div>")
+            const restaurantCardRightStarsBack = $("<div class='info-card-restaurant-rate-stars-back'></div>")
+            const restaurantCardRightStarsFront = $(`<div class='info-card-restaurant-rate-stars-front' style='width: 0'></div>`)
+
+            restaurantCardRightStarsContainer.append(restaurantCardRightStarsBack)
+            restaurantCardRightStarsBack.append(restaurantCardRightStarsFront)
+
+            for (let i = 0; i < 5; i++) {
+                restaurantCardRightStarsBack.append($("<i class='fa fa-star' aria-hidden='true'></i>"))
+                restaurantCardRightStarsFront.append($("<i class='fa fa-star' aria-hidden='true'></i>"))
+            }
+
+            restaurantCardRightRatingContainer.append(restaurantCardRightRating, restaurantCardRightStarsContainer)
+
+            restaurantCardRight.append(restaurantCardRightMain, restaurantCardRightRatingContainer)
         }
-
-        restaurantCardRightRatingContainer.append(restaurantCardRightRating, restaurantCardRightStarsContainer)
-
-        restaurantCardRight.append(restaurantCardRightMain, restaurantCardRightRatingContainer)
-
         restaurantCard.append(restaurantCardLeft, restaurantCardRight)
         return restaurant.card = restaurantCard
     }

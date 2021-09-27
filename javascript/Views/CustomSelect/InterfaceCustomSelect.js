@@ -11,7 +11,7 @@ class InterfaceCustomSelect {
     displayCustomSelect() {
         const select = $('<select></select>')
         select.append($('<option value="0" class="hide">Note</option>'))
-        for (let i = 1; i <= this.maxRating; i++) {
+        for (let i = 0; i <= this.maxRating; i++) {
             select.append($(`<option value="${i}">${i}</option>`))
         }
         select.change(()=>{

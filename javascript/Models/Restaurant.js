@@ -7,7 +7,7 @@ class Restaurant {
      * @param {string} phone
      * @param {number} lat
      * @param {number} long
-     * @param {string} type
+     * @param {string[]} type
      * @param {Object} ratings
      */
     constructor(name, adress, phone, lat, long, type, ratings) {
@@ -28,17 +28,23 @@ class Restaurant {
      * @returns {number}
      */
     getAverageRating(ratings){
-        let starsSum = 0
-        let ratingFound = 0
-        let rating = null
-        for (let i = 0; i < ratings.length; i++ ) {
-            rating = ratings[i]
-            if (rating){
-                starsSum = rating.stars + starsSum
-                ratingFound = ratingFound + 1
+        if (ratings.length !== 0) {
+            let starsSum = 0
+            let ratingFound = 0
+            let rating = null
+            for (let i = 0; i < ratings.length; i++ ) {
+                rating = ratings[i]
+                if (rating){
+                    starsSum = rating.stars + starsSum
+                    ratingFound = ratingFound + 1
+                }
             }
+            return starsSum / ratingFound
+
+        } else {
+            return 0
         }
-        return starsSum / ratingFound
+
     }
 }
 

@@ -13,6 +13,12 @@
     margin-left: 25px;
 }
 
+.main .overlay-container .overlay-add-restaurant .overlay-add-restaurant-instructions {
+    font-family: 'Oswald', sans-serif;
+    height: 35px;
+    margin-left: 25px;
+}
+
 .main .overlay-container .overlay-add-restaurant .overlay-add-restaurant-forms {
     display: flex;
     flex-direction: row;

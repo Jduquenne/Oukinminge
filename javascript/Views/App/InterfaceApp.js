@@ -35,6 +35,7 @@ class InterfaceApp {
             customRating:  $( ".selectRating" ),
             main: $( ".main" ),
         }
+        this.locationSave = null
 
         this.interfaceMap = new InterfaceMap(
             this.defaultMapParams,
@@ -45,7 +46,11 @@ class InterfaceApp {
         this.interfaceSearchbar = new InterfaceSearchbar(this.interfaceMap.map, this.controlElt.searchbarInput)
         this.interfaceCustomSelect = new InterfaceCustomSelect(this.controlElt.customRating, (value)=>this.displayRestaurantsByRating(value))
         this.interfaceRestaurantInfos = new InterfaceRestaurantInfos(this.controlElt.overlayContainer, () => this.setMarkerAnimationNull())
-        this.interfaceAddRestaurant = new InterfaceAddRestaurant(this.controlElt.overlayContainer, () => this.resetMarkerCreateAndAddRestaurantForm())
+        this.interfaceAddRestaurant = new InterfaceAddRestaurant(
+            this.controlElt.overlayContainer,
+            () => this.resetMarkerCreateAndAddRestaurantForm(),
+            () => this.addRestaurant()
+        )
         this.interfaceAddButtonRestaurant = new InterfaceAddButtonRestaurant(
             this.controlElt.main,
             () => this.displayAddRestaurantInstructions(),
@@ -68,7 +73,6 @@ class InterfaceApp {
         }
         this.interfaceMap.removeMapListener()
         this.interfaceAddButtonRestaurant.setButtonOpenInstruction()
-        this.interfaceAddButtonRestaurant.handleAddRestaurantClick(this.interfaceAddButtonRestaurant.controlElt.buttonAddRestaurant)
 
         this.interfaceRestaurantInfos.setHeightForRestaurantInfos()
         this.interfaceRestaurantInfos.generateModal(restaurant)
@@ -91,7 +95,6 @@ class InterfaceApp {
         }
         this.interfaceMap.removeMapListener()
         this.interfaceAddButtonRestaurant.setButtonOpenInstruction()
-        this.interfaceAddButtonRestaurant.handleAddRestaurantClick(this.interfaceAddButtonRestaurant.controlElt.buttonAddRestaurant)
 
         if (this.interfaceAddRestaurant.isOpen === true) {
             this.interfaceAddRestaurant.hideModal()
@@ -107,6 +110,7 @@ class InterfaceApp {
 
     displayAddRestaurantInstructions() {
         this.setMarkerAnimationNull()
+        this.interfaceRestaurantInfos.setClose()
         this.interfaceCards.removeActiveAllCards()
         this.interfaceAddRestaurant.setHeightForAddRestaurant()
 
@@ -114,59 +118,54 @@ class InterfaceApp {
         this.interfaceAddRestaurant.generateInstructions()
         this.interfaceAddRestaurant.showModal()
         this.interfaceMap.setMapListener()
-        console.log('je suis sur les instructions')
+
         this.interfaceAddButtonRestaurant.setButtonHideInstruction()
-        this.interfaceAddButtonRestaurant.handleAddRestaurantClick(this.interfaceAddButtonRestaurant.controlElt.buttonAddRestaurant)
     }
 
-    displayAddRestaurantForm() {
+    displayAddRestaurantForm(position) {
+        this.locationSave = position
         this.interfaceAddRestaurant.controlsElt.overlayContainer.empty()
         this.interfaceAddRestaurant.generateAddForm()
         this.interfaceAddRestaurant.showModal()
-        console.log('je suis sur le formulaire')
+
         this.interfaceAddButtonRestaurant.setButtonHideAddRestaurantForm()
-        this.interfaceAddButtonRestaurant.handleAddRestaurantClick(this.interfaceAddButtonRestaurant.controlElt.buttonAddRestaurant)
     }
 
     resetMarkerCreateAndAddRestaurantForm() {
+        this.locationSave = null
         this.interfaceMap.markers[this.interfaceMap.markers.length - 1].setMap(null);
         this.interfaceAddRestaurant.controlsElt.overlayContainer.empty()
         this.interfaceAddRestaurant.hideModal()
         this.interfaceMap.removeMapListener()
-        console.log('jannule lajout du restaurant')
+
         this.interfaceAddButtonRestaurant.setButtonOpenInstruction()
-        this.interfaceAddButtonRestaurant.handleAddRestaurantClick(this.interfaceAddButtonRestaurant.controlElt.buttonAddRestaurant)
     }
 
     resetAddRestaurantInstructions() {
         this.interfaceAddRestaurant.controlsElt.overlayContainer.empty()
         this.interfaceAddRestaurant.hideModal()
         this.interfaceMap.removeMapListener()
-        console.log('je cache les instructions')
+
         this.interfaceAddButtonRestaurant.setButtonOpenInstruction()
-        this.interfaceAddButtonRestaurant.handleAddRestaurantClick(this.interfaceAddButtonRestaurant.controlElt.buttonAddRestaurant)
     }
 
-    async displayNewRestaurant(position) {
-        const newRestaurant = new Restaurant('Lambda', '123 rue de la gare, 59270 Bailleul', '0685742145', position.latLng.lat(), position.latLng.lng(), ['FastFood'], [
-            {
-                "stars":2,
-                "commentator":"Jason",
-                "comment":"Un excellent restaurant, j'y reviendrai ! Par contre il vaut mieux aimer la viande."
-            },
-            {
-                "stars":5,
-                "commentator":"Batman",
-                "comment":"Lorem ipsum dolor sit amet, consectetur adipisicing elit. A accusantium asperiores aut consequuntur corporis\n    dolorum ducimus est inventore iste, laborum modi nesciunt obcaecati recusandae similique suscipit ut veniam\n    veritatis, voluptatibus.  A accusantium asperiores aut consequuntur corporis\n    dolorum ducimus est inventore iste, laborum modi nesciunt obcaecati recusandae similique suscipit ut veniam\n    veritatis, voluptatibus."
-            },
-            {
-                "stars":2,
-                "commentator":"Jason",
-                "comment":"Un excellent restaurant, j'y reviendrai ! Par contre il vaut mieux aimer la viande."
-            }
-        ] )
+    async addRestaurant() {
+        const newRestaurant = new Restaurant(
+            $('#restaurantName').val(),
+            `${$('#restaurantStreet').val()},
+            ${$('#restaurantTown').val()} ${$('#restaurantZipCode').val()}`,
+            $('#restaurantPhone').val(),
+            this.locationSave.latLng.lat(),
+            this.locationSave.latLng.lng(),
+            ['Restaurant'],
+            []
+        )
         this.restaurantsRepository.addInMemoryRestaurant(newRestaurant)
         this.restaurants = await this.restaurantsRepository.findRestaurants()
+
+        this.interfaceAddRestaurant.hideModal()
+        this.interfaceAddButtonRestaurant.setButtonOpenInstruction()
+
         this.interfaceMap.displayMarkers(this.restaurants);
         this.interfaceCards.displayCards(this.restaurants);
         this.interfaceMap.setZoom(17)
