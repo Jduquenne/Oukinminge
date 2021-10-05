@@ -1,0 +1,155 @@
+.overlay-add-comment {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+
+.overlay-add-comment h2 {
+    display: flex;
+    align-items: center;
+    font-family: 'Oswald', sans-serif;
+    height: 30px;
+    margin-left: 25px;
+}
+
+.overlay-add-comment .overlay-add-comment-form {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    margin-left: 25px;
+    height: calc(100% - 30px);
+}
+
+.overlay-add-comment .overlay-add-comment-form .overlay-add-comment-form-comment {
+    display: flex;
+    flex-direction: column;
+    margin-right: 25px;
+}
+
+.overlay-add-comment .overlay-add-comment-form .overlay-add-comment-form-comment .overlay-add-comment-form-comment-input {
+    display: flex;
+    align-items: center;
+    background-color: #FFFFFF;
+    box-shadow: inset 0 -1px 0 #0d0d0d;
+    border: none;
+    height: 85px;
+    width: 500px;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.overlay-add-comment .overlay-add-comment-form .overlay-add-comment-form-comment .overlay-add-comment-form-comment-input #commentTextArea {
+    font-family: 'Oswald', sans-serif;
+    font-size: 15px;
+    background-color: #FFFFFF;
+    color: #0D0D0D;
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    resize: none;
+    border: none;
+}
+
+.overlay-add-comment .overlay-add-comment-form .overlay-add-comment-form-comment .overlay-add-comment-form-comment-input textarea:focus {
+    outline: none;
+}
+
+.overlay-add-comment .overlay-add-comment-form .overlay-add-comment-form-name-rating {
+    display: flex;
+    flex-direction: column;
+    margin-right: 25px;
+}
+
+.overlay-add-comment .overlay-add-comment-form .overlay-add-comment-form-name-rating .overlay-add-comment-form-name-input {
+    display: flex;
+    align-items: center;
+    background-color: #FFFFFF;
+    box-shadow: inset 0 -1px 0 #0d0d0d;
+    border: none;
+    height: 50%;
+    width: 300px;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.overlay-add-comment .overlay-add-comment-form .overlay-add-comment-form-name-rating .overlay-add-comment-form-name-input input {
+    font-family: 'Oswald', sans-serif;
+    font-size: 15px;
+    background-color: #FFFFFF;
+    color: #0D0D0D;
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    border: none;
+}
+
+.overlay-add-comment .overlay-add-comment-form .overlay-add-comment-form-name-rating .overlay-add-comment-form-name-input input:focus {
+    outline: none;
+}
+
+.overlay-add-comment .overlay-add-comment-form .overlay-add-comment-form-name-rating .overlay-add-comment-form-rating-input {
+    display: flex;
+    align-items: center;
+    background-color: #FFFFFF;
+    box-shadow: inset 0 -1px 0 #0d0d0d;
+    border: none;
+    height: 50%;
+    width: 300px;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.overlay-add-comment .overlay-add-comment-form .overlay-add-comment-form-name-rating .overlay-add-comment-form-rating-input select {
+    font-family: 'Oswald', sans-serif;
+    font-size: 15px;
+    background-color: #FFFFFF;
+    color: #0D0D0D;
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    border: none;
+}
+
+.overlay-add-comment .overlay-add-comment-form .overlay-add-comment-form-name-rating .overlay-add-comment-form-rating-input select .hide {
+    display: none;
+}
+
+.overlay-add-comment .overlay-add-comment-form .overlay-add-comment-form-name-rating .overlay-add-comment-form-rating-input select:focus {
+    outline: none;
+}
+
+.overlay-add-comment .overlay-add-comment-form .overlay-add-comment-form-submit {
+    display: flex;
+    flex-direction: column;
+    margin-right: 25px;
+}
+
+.overlay-add-comment .overlay-add-comment-form .overlay-add-comment-form-submit .overlay-add-comment-form-submit-btn {
+    height: 41px;
+    width: 150px;
+    border: none;
+    box-shadow: inset 0 -1px 0 #0d0d0d;
+    font-family: 'Oswald', sans-serif;
+    font-size: 25px;
+    margin-bottom: 20px;
+    transition: all 0.5s ease-out;
+    cursor: pointer;
+}
+
+.overlay-add-comment .overlay-add-comment-form .overlay-add-comment-form-submit #add {
+    background-color: #EA4335;
+}
+.overlay-add-comment .overlay-add-comment-form .overlay-add-comment-form-submit #add:hover {
+    background-color: #86181d;
+    color: #F5F5F5;
+}
+
+.overlay-add-comment .overlay-add-comment-form .overlay-add-comment-form-submit #cancel {
+    background-color: #A3AFBF;
+}
+
+.overlay-add-comment .overlay-add-comment-form .overlay-add-comment-form-submit #cancel:hover {
+    background-color: #818897;
+    color: #F5F5F5;
+}

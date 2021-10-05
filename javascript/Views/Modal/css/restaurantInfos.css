@@ -99,6 +99,13 @@
     width: 50px;
 }
 
+.main .overlay-container .overlay-restaurant-infos .overlay-restaurant-infos-container .overlay-restaurant-infos-comment-add-rating {
+    font-family: 'Oswald', sans-serif;
+    font-size: 14px;
+    font-weight: normal;
+    cursor: pointer;
+}
+
 .main .overlay-container .overlay-restaurant-infos .overlay-restaurant-infos-container .overlay-restaurant-infos-type {
     font-family: 'Oswald', sans-serif;
     font-size: 19px;
@@ -167,6 +174,10 @@
     font-family: 'Oswald', sans-serif;
     font-size: 14px;
     font-weight: normal;
+}
+
+.main .overlay-container .overlay-restaurant-infos .overlay-restaurant-comments-container .overlay-restaurant-comments .overlay-restaurant-comments-top .overlay-restaurant-comments-top-rating i {
+    color: #EA4335;
 }
 
 .main .overlay-container .overlay-restaurant-infos .overlay-restaurant-close {

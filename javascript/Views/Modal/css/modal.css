@@ -1,12 +1,39 @@
-.main .overlay-container {
+.main .overlays {
+    display: flex;
+    flex-direction: column;
+}
+
+.main .overlays .overlay-container {
     position: absolute;
     left: 300px;
     top: -200px;
-    z-index: 0;
+    z-index: 2;
     height: 200px;
     width: calc(100% - 300px);
     background-color: #F1F3F4;
     border-bottom: #A3AFBF 1px solid ;
     transition: top 0.5s ease-out;
+}
+
+.main .overlays .overlay-add-comment-container {
+    position: absolute;
+    height: 200px;
+    width: calc(100% - 300px);
+    left: 300px;
+    /*top: 326px;*/
+    /*top: 120px;*/
+    top: -160px;
+    z-index: 1;
+    background-color: #F1F3F4;
+    border-bottom: #A3AFBF 1px solid ;
+    transition: top 0.5s ease-out;
+}
+
+.main input::placeholder {
+    color: #0D0D0D;
+}
+
+.main textarea::placeholder {
+    color: #0D0D0D;
 }
 

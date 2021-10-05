@@ -56,14 +56,6 @@
     border: none;
 }
 
-.main .overlay-container .overlay-add-restaurant .overlay-add-restaurant-forms .overlay-add-restaurant-form #restaurantZipCode {
-
-}
-
-.main .overlay-container .overlay-add-restaurant .overlay-add-restaurant-forms .overlay-add-restaurant-form #restaurantTown {
-
-}
-
 .main .overlay-container .overlay-add-restaurant .overlay-add-restaurant-forms .overlay-add-restaurant-form input:focus {
     outline: none;
 }

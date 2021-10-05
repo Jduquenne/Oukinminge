@@ -7,6 +7,8 @@ import { InterfaceCustomSelect } from "../CustomSelect/InterfaceCustomSelect.js"
 import { RestaurantRepository } from "../../Repository/RestaurantRepository.js";
 import { Restaurant } from "../../Models/Restaurant.js";
 import {InterfaceAddButtonRestaurant} from "../ButtonAddRestaurant/InterfaceAddButtonRestaurant.js";
+import {InterfaceAddComment} from "../Modal/InterfaceAddComment.js";
+import {Utils} from "../../Utils/Utils.js";
 
 class InterfaceApp {
     /**
@@ -31,10 +33,12 @@ class InterfaceApp {
         this.controlElt = {
             searchbarInput: document.getElementById('input-search'),
             infosRestaurant: $('.infos-restaurant'),
+            addComment: $('.overlay-add-comment-container'),
             overlayContainer:  $('.overlay-container'),
             customRating:  $( ".selectRating" ),
             main: $( ".main" ),
         }
+        this.restaurantSelected = null
         this.locationSave = null
 
         this.interfaceMap = new InterfaceMap(
@@ -45,7 +49,7 @@ class InterfaceApp {
         this.interfaceCards = new InterfaceCards(this.controlElt.infosRestaurant, (restaurant) => this.displayModalWithPanTo(restaurant))
         this.interfaceSearchbar = new InterfaceSearchbar(this.interfaceMap.map, this.controlElt.searchbarInput)
         this.interfaceCustomSelect = new InterfaceCustomSelect(this.controlElt.customRating, (value)=>this.displayRestaurantsByRating(value))
-        this.interfaceRestaurantInfos = new InterfaceRestaurantInfos(this.controlElt.overlayContainer, () => this.setMarkerAnimationNull())
+        this.interfaceRestaurantInfos = new InterfaceRestaurantInfos(this.controlElt.overlayContainer, () => this.setMarkerAnimationNull(), () => this.displayAddCommentForm())
         this.interfaceAddRestaurant = new InterfaceAddRestaurant(
             this.controlElt.overlayContainer,
             () => this.resetMarkerCreateAndAddRestaurantForm(),
@@ -57,6 +61,10 @@ class InterfaceApp {
             () => this.resetMarkerCreateAndAddRestaurantForm(),
             () => this.resetAddRestaurantInstructions()
         )
+        this.interfaceAddComment = new InterfaceAddComment(
+            this.controlElt.addComment,
+            () => this.addCommentForRestaurant(this.restaurantSelected)
+        )
     }
 
     async displayApp() {
@@ -65,9 +73,15 @@ class InterfaceApp {
         this.interfaceCards.displayCards(this.restaurants)
         this.interfaceSearchbar.initSearchBoxAutocomplete()
         this.interfaceAddButtonRestaurant.displayAddButtonRestaurant()
+        this.interfaceAddComment.generateAddCommentForm()
     }
 
     displayModalWithPanTo (restaurant) {
+        this.restaurantSelected = restaurant
+        console.log(this.restaurantSelected)
+        if (this.interfaceAddComment.isOpen) {
+            this.interfaceAddComment.resetModal()
+        }
         if (this.interfaceAddButtonRestaurant.btnState === 2) {
             this.interfaceMap.markers[this.interfaceMap.markers.length - 1].setMap(null);
         }
@@ -123,6 +137,7 @@ class InterfaceApp {
     }
 
     displayAddRestaurantForm(position) {
+        console.log(this.restaurantSelected)
         this.locationSave = position
         this.interfaceAddRestaurant.controlsElt.overlayContainer.empty()
         this.interfaceAddRestaurant.generateAddForm()
@@ -131,7 +146,15 @@ class InterfaceApp {
         this.interfaceAddButtonRestaurant.setButtonHideAddRestaurantForm()
     }
 
+    displayAddCommentForm() {
+        console.log(this.restaurantSelected)
+        this.interfaceAddComment.controlsElt.overlayCommentContainer.empty()
+        this.interfaceAddComment.generateAddCommentForm()
+        this.interfaceAddComment.showModal()
+    }
+
     resetMarkerCreateAndAddRestaurantForm() {
+        console.log(this.restaurantSelected)
         this.locationSave = null
         this.interfaceMap.markers[this.interfaceMap.markers.length - 1].setMap(null);
         this.interfaceAddRestaurant.controlsElt.overlayContainer.empty()
@@ -142,6 +165,8 @@ class InterfaceApp {
     }
 
     resetAddRestaurantInstructions() {
+        console.log(this.restaurantSelected)
+        this.restaurantSelected = null
         this.interfaceAddRestaurant.controlsElt.overlayContainer.empty()
         this.interfaceAddRestaurant.hideModal()
         this.interfaceMap.removeMapListener()
@@ -153,7 +178,7 @@ class InterfaceApp {
         const newRestaurant = new Restaurant(
             $('#restaurantName').val(),
             `${$('#restaurantStreet').val()},
-            ${$('#restaurantTown').val()} ${$('#restaurantZipCode').val()}`,
+             ${$('#restaurantZipCode').val()} ${Utils.prototype.capitalizeFirstLetter($('#restaurantTown').val())}`,
             $('#restaurantPhone').val(),
             this.locationSave.latLng.lat(),
             this.locationSave.latLng.lng(),
@@ -172,10 +197,28 @@ class InterfaceApp {
         this.interfaceMap.setCenterTo(this.restaurants[0]);
     }
 
+    async addCommentForRestaurant(restaurant) {
+        const comment = {
+            comment: $('#commentTextArea').val(),
+            commentator: $('#commentator').val(),
+            stars: parseInt($('#commentRating option:selected').val())
+        }
+        restaurant.ratings.unshift(comment)
+
+        restaurant.average = restaurant.getAverageRating(restaurant.ratings)
+        this.interfaceCards.displayCards(this.restaurants)
+        this.interfaceRestaurantInfos.updateRestaurantInfos(restaurant)
+        this.interfaceCards.setSelectedCard(restaurant)
+        this.interfaceAddComment.hideModal()
+    }
+
     setMarkerAnimationNull() {
         if (this.interfaceMap.markerSelected) {
+            this.restaurantSelected = null
+            console.log(this.restaurantSelected)
             this.interfaceMap.markerSelected.setAnimation(null);
             this.interfaceMap.setZoom(17)
+            this.interfaceAddComment.resetModal()
         }
     }
 }

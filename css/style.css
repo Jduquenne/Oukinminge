@@ -8,6 +8,7 @@
 @import "../javascript/Views/Modal/css/addRestaurant.css";
 @import "../javascript/Views/Searchbar/searchbar.css";
 @import "../javascript/Views/ButtonAddRestaurant/addButtonRestaurant.css";
+@import "../javascript/Views/Modal/css/addComment.css";
 
 :root {
     --primary : #592F25;

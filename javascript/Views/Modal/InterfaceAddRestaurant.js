@@ -46,26 +46,26 @@ class InterfaceAddRestaurant {
 
         const overlayAddRestaurantFormsContainerFirst = $('<div class="overlay-add-restaurant-forms-container"></div>')
         const overlayAddRestaurantFormName = $('<div class="overlay-add-restaurant-form"></div>')
-        overlayAddRestaurantFormName.append(this.generateOneInput('restaurantName', 'Nom du restaurant'))
+        overlayAddRestaurantFormName.append(this.generateOneInput('restaurantName', 'Nom du restaurant', '[A-Za-z0-9\'\\.\\-\\s\\,]'))
         const overlayAddRestaurantFormPhone = $('<div class="overlay-add-restaurant-form"></div>')
-        overlayAddRestaurantFormPhone.append(this.generateOneInput('restaurantPhone', 'Numéro de téléphone'))
+        overlayAddRestaurantFormPhone.append(this.generateOneInput('restaurantPhone', 'Numéro de téléphone', '(01|02|03|04|05|06|07|08|09)[ \\.\\-]?[0-9]{2}[ \\.\\-]?[0-9]{2}[ \\.\\-]?[0-9]{2}[ \\.\\-]?[0-9]{2}'))
         overlayAddRestaurantFormsContainerFirst.append(overlayAddRestaurantFormName, overlayAddRestaurantFormPhone)
 
         const overlayAddRestaurantFormsContainerSecond = $('<div class="overlay-add-restaurant-forms-container"></div>')
         const overlayAddRestaurantFormStreet = $('<div class="overlay-add-restaurant-form"></div>')
-        overlayAddRestaurantFormStreet.append(this.generateOneInput('restaurantStreet', 'Adresse'))
+        overlayAddRestaurantFormStreet.append(this.generateOneInput('restaurantStreet', 'Adresse', '[A-Za-z0-9\'\\.\\-\\s\\,]'))
         const overlayAddRestaurantFormTownZip = $('<div class="overlay-add-restaurant-form"></div>')
-        const overlayAddRestaurantFormTown = this.generateOneInput('restaurantTown', 'Ville')
-        const overlayAddRestaurantFormZip = this.generateOneInput('restaurantZipCode', 'Code postal')
+        const overlayAddRestaurantFormTown = this.generateOneInput('restaurantTown', 'Ville', '[A-Za-z0-9\'\\.\\-\\s\\,]')
+        const overlayAddRestaurantFormZip = this.generateOneInput('restaurantZipCode', 'Code postal', '^(([0-8][0-9])|(9[0-5])|(2[ab]))[0-9]{3}$')
         overlayAddRestaurantFormTownZip.append(overlayAddRestaurantFormTown, overlayAddRestaurantFormZip)
         overlayAddRestaurantFormsContainerSecond.append(overlayAddRestaurantFormStreet, overlayAddRestaurantFormTownZip)
 
         const overlayAddRestaurantFormsContainerThird = $('<div class="overlay-add-restaurant-forms-container"></div>')
         const overlayAddRestaurantFormsAddButton = $('<button id="add" type="submit">Ajouter</button>')
-        overlayAddRestaurantFormsAddButton.on('click', () => {
+        overlayAddRestaurantForms.on('submit', () => {
             this.onClickAdd()
         })
-        const overlayAddRestaurantFormsCancelButton = $('<div class="button-cancel" id="cancel">Annuler</div>')
+        const overlayAddRestaurantFormsCancelButton = $('<button class="button-cancel" id="cancel">Annuler</button>')
         overlayAddRestaurantFormsCancelButton.on('click', () => {
             this.hideModal()
             this.onClickCancel()
@@ -78,8 +78,8 @@ class InterfaceAddRestaurant {
         this.controlsElt.overlayContainer.append(overlayAddRestaurant)
     }
 
-    generateOneInput(id, placeholder) {
-        return $(`<input id="${id}" type="text" placeholder="${placeholder}">`)
+    generateOneInput(id, placeholder, regex) {
+        return $(`<input id="${id}" type="text" placeholder="${placeholder}" pattern="${regex}" required />`)
     }
 
     generateInstructions() {

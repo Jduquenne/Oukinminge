@@ -1,7 +1,8 @@
 import { GOOGLE_MAP_API_KEY } from "../../config.js";
+import {Utils} from "../../Utils/Utils.js";
 
 class InterfaceRestaurantInfos {
-    constructor(container, onClickClose) {
+    constructor(container, onClickClose, onClickAddRating) {
         this.controlsElt = {
             overlayContainer: container,
             closeModal: $('.overlay-restaurant-close'),
@@ -9,6 +10,7 @@ class InterfaceRestaurantInfos {
         }
         this.isOpen = false
         this.onClickClose = onClickClose
+        this.onClickAddRating = onClickAddRating
     }
 
     setOpen () {
@@ -40,6 +42,11 @@ class InterfaceRestaurantInfos {
         }
     }
 
+    updateRestaurantInfos(restaurant) {
+        this.controlsElt.overlayContainer.empty()
+        this.generateInfosRestaurant(restaurant)
+    }
+
     generateModal (restaurant) {
         if (restaurant) {
             this.controlsElt.overlayContainer.empty()
@@ -56,13 +63,13 @@ class InterfaceRestaurantInfos {
         overlayImgContainer.append(overlayImg)
 
         const overlayInfosContainer = $("<div class='overlay-restaurant-infos-container'></div>")
-        const overlayInfosName = $(`<div class='overlay-restaurant-infos-name'>${restaurant.name}</div>`)
+        const overlayInfosName = $(`<div class='overlay-restaurant-infos-name'>${Utils.prototype.capitalizeFirstLetter(restaurant.name)}</div>`)
 
 
         const overlayInfosCoordContainer = $("<div class='overlay-restaurant-infos-coord-container'></div>")
         const overlayInfosCoord = $("<div class='overlay-restaurant-infos-coord'></div>")
 
-        const overlayInfosCoordAdress = $(`<div class="overlay-restaurant-infos-coord-adress">${this.formatAdressConvert(restaurant.adress)}</div>`)
+        const overlayInfosCoordAdress = $(`<div class="overlay-restaurant-infos-coord-adress">${Utils.prototype.formatAdressConvert(restaurant.adress)}</div>`)
         const overlayInfosCoordPhone = $(`<div class="overlay-restaurant-infos-coord-phone">${restaurant.phone}</div>`)
         overlayInfosCoord.append(overlayInfosCoordAdress, overlayInfosCoordPhone)
 
@@ -70,10 +77,9 @@ class InterfaceRestaurantInfos {
 
         const overlayInfosRatingContainer = $("<div class='overlay-restaurant-infos-ratings-container'></div>")
 
-        const overlayInfosRating = $(`<div class='overlay-restaurant-infos-average'>${restaurant.average}</div>`)
+        if (restaurant.ratings.length !== 0){
+            const overlayInfosRating = $(`<div class='overlay-restaurant-infos-average'>${restaurant.average}</div>`)
 
-
-        if (restaurant.ratings){
             const overlayInfosStarsContainer = $("<div class='overlay-restaurant-infos-stars-container'></div>")
             const overlayInfosStarsBack = $("<div class='overlay-restaurant-infos-stars-back'></div>")
             const overlayInfosStarsFront = $(`<div class='overlay-restaurant-infos-stars-front' style='width: ${restaurant.average * 20}%'></div>`)
@@ -86,22 +92,16 @@ class InterfaceRestaurantInfos {
             const overlayInfosCommentLength = $(`<div class='overlay-restaurant-infos-comment'>${restaurant.ratings.length} avis</div>`)
             overlayInfosRatingContainer.append(overlayInfosRating, overlayInfosStarsContainer, overlayInfosCommentLength)
         } else {
-            const overlayInfosStarsContainer = $("<div class='overlay-restaurant-infos-stars-container'></div>")
-            const overlayInfosStarsBack = $("<div class='overlay-restaurant-infos-stars-back'></div>")
-            const overlayInfosStarsFront = $(`<div class='overlay-restaurant-infos-stars-front' style='width: 0'></div>`)
-            overlayInfosStarsContainer.append(overlayInfosStarsBack)
-            overlayInfosStarsBack.append(overlayInfosStarsFront)
-            for (let i = 0; i < 5; i++) {
-                overlayInfosStarsBack.append($("<i class='fa fa-star' aria-hidden='true'></i>"))
-                overlayInfosStarsFront.append($("<i class='fa fa-star' aria-hidden='true'></i>"))
-            }
             const overlayInfosCommentLength = $(`<div class='overlay-restaurant-infos-comment'>0 avis</div>`)
-            overlayInfosRatingContainer.append(overlayInfosRating, overlayInfosStarsContainer, overlayInfosCommentLength)
+            overlayInfosRatingContainer.append(overlayInfosCommentLength)
         }
 
-        const overlayInfosType = $(`<div class="overlay-restaurant-infos-type">${this.typeToString(restaurant)}</div>`)
+        const overlayInfosCommentAddRating = $(`<div class='overlay-restaurant-infos-comment-add-rating'>Donner son avis</div>`)
+        overlayInfosCommentAddRating.on('click', this.onClickAddRating)
 
-        overlayInfosContainer.append(overlayInfosName, overlayInfosCoordContainer, overlayInfosRatingContainer, overlayInfosType)
+        const overlayInfosType = $(`<div class="overlay-restaurant-infos-type">${Utils.prototype.typeToString(restaurant)}</div>`)
+
+        overlayInfosContainer.append(overlayInfosName, overlayInfosCoordContainer, overlayInfosRatingContainer,overlayInfosCommentAddRating ,overlayInfosType)
 
         const overlayCloseModal = $('<div class="overlay-restaurant-close">X</div>')
         overlayCloseModal.on('click', () => {
@@ -137,7 +137,7 @@ class InterfaceRestaurantInfos {
             const overlayCommentTop = $("<div class='overlay-restaurant-comments-top'></div>")
 
             const overlayCommentTopName = $(`<div class='overlay-restaurant-comments-top-name'>${rating.commentator}</div>`)
-            const overlayCommentTopRating = $(`<div class='overlay-restaurant-comments-top-rating'>${rating.stars}</div>`)
+            const overlayCommentTopRating = $(`<div class='overlay-restaurant-comments-top-rating'>${rating.stars} <i class='fa fa-star' aria-hidden='true'></i></div>`)
 
             overlayCommentTop.append(overlayCommentTopName, overlayCommentTopRating)
 
@@ -147,29 +147,6 @@ class InterfaceRestaurantInfos {
         }
 
     }
-
-    /**
-     *
-     * @param {string} adress
-     * @returns {string}
-     */
-    formatAdressConvert(adress) {
-        adress = adress.replace(',', ',<br/>')
-        return adress
-    }
-
-    typeToString(restaurant) {
-        let typeOfRestaurantToString = ""
-        for (let i = 0; i < restaurant.type.length; i++) {
-            if (restaurant.type[i] === restaurant.type[restaurant.type.length - 1]) {
-                typeOfRestaurantToString += restaurant.type[i]
-            } else {
-                typeOfRestaurantToString += restaurant.type[i] + ", "
-            }
-        }
-        return typeOfRestaurantToString
-    }
-
 }
 
 export { InterfaceRestaurantInfos }

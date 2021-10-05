@@ -25,7 +25,7 @@ class Restaurant {
     }
 
     /**
-     * @returns {number}
+     * @returns {number | null}
      */
     getAverageRating(ratings){
         if (ratings.length !== 0) {
@@ -39,12 +39,17 @@ class Restaurant {
                     ratingFound = ratingFound + 1
                 }
             }
-            return starsSum / ratingFound
-
+            return this.aroundAverage( starsSum / ratingFound )
         } else {
-            return 0
+            return null
         }
+    }
 
+    /**
+     * @returns {number | null}
+     */
+    aroundAverage(average) {
+        return Math.round(average * 10) / 10
     }
 }
 

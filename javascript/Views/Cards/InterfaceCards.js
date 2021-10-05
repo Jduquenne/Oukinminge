@@ -1,4 +1,5 @@
 import { GOOGLE_MAP_API_KEY } from "../../config.js";
+import {Utils} from "../../Utils/Utils.js";
 
 class InterfaceCards {
 
@@ -6,9 +7,11 @@ class InterfaceCards {
      *
      * @param {*|jQuery} container
      * @param {Function} onCardClick
+     * @param {Function} onCardHover
      */
-    constructor( container, onCardClick = null ) {
+    constructor( container, onCardClick = null, onCardHover = null ) {
         this.onCardClick = onCardClick
+        this.onCardHover = onCardHover
         this.controlsElt = {
             infosRestaurant: container
         }
@@ -50,11 +53,11 @@ class InterfaceCards {
         const restaurantCardRight = $("<div class='info-card-restaurant-right'></div>")
 
         const restaurantCardRightMain = $("<div class='info-card-restaurant-main'></div>")
-        const restaurantCardRightMainName = $(`<div class='info-card-restaurant-name'>${restaurant.name}</div>`)
-        const restaurantCardRightMainAdress = $(`<div class='info-card-restaurant-adress'>${this.formatAdressConvert(restaurant.adress)}</div>`)
+        const restaurantCardRightMainName = $(`<div class='info-card-restaurant-name'>${Utils.prototype.capitalizeFirstLetter(restaurant.name)}</div>`)
+        const restaurantCardRightMainAdress = $(`<div class='info-card-restaurant-adress'>${Utils.prototype.formatAdressConvert(restaurant.adress)}</div>`)
         restaurantCardRightMain.append(restaurantCardRightMainName, restaurantCardRightMainAdress)
 
-        if (restaurant.ratings) {
+        if (restaurant.ratings.length !== 0) {
             const restaurantCardRightRatingContainer = $("<div class='info-card-restaurant-rate-container'></div>")
 
             const restaurantCardRightRating = $(`<div class='info-card-restaurant-rate'>${restaurant.average}</div>`)
@@ -77,36 +80,14 @@ class InterfaceCards {
         } else {
             const restaurantCardRightRatingContainer = $("<div class='info-card-restaurant-rate-container'></div>")
 
-            const restaurantCardRightRating = $(`<div class='info-card-restaurant-rate'>0</div>`)
+            const restaurantCardRightRating = $(`<div class='info-card-restaurant-rate'>Pas encore noté</div>`)
 
-            const restaurantCardRightStarsContainer = $("<div class='info-card-restaurant-rate-stars-container'></div>")
-            const restaurantCardRightStarsBack = $("<div class='info-card-restaurant-rate-stars-back'></div>")
-            const restaurantCardRightStarsFront = $(`<div class='info-card-restaurant-rate-stars-front' style='width: 0'></div>`)
-
-            restaurantCardRightStarsContainer.append(restaurantCardRightStarsBack)
-            restaurantCardRightStarsBack.append(restaurantCardRightStarsFront)
-
-            for (let i = 0; i < 5; i++) {
-                restaurantCardRightStarsBack.append($("<i class='fa fa-star' aria-hidden='true'></i>"))
-                restaurantCardRightStarsFront.append($("<i class='fa fa-star' aria-hidden='true'></i>"))
-            }
-
-            restaurantCardRightRatingContainer.append(restaurantCardRightRating, restaurantCardRightStarsContainer)
+            restaurantCardRightRatingContainer.append(restaurantCardRightRating)
 
             restaurantCardRight.append(restaurantCardRightMain, restaurantCardRightRatingContainer)
         }
         restaurantCard.append(restaurantCardLeft, restaurantCardRight)
         return restaurant.card = restaurantCard
-    }
-
-    /**
-     *
-     * @param {string} adress
-     * @returns {string}
-     */
-    formatAdressConvert(adress) {
-        adress = adress.replace(',', ',<br/>')
-        return adress
     }
 }
 
