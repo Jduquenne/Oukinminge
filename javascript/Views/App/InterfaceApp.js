@@ -199,8 +199,8 @@ class InterfaceApp {
 
     async addCommentForRestaurant(restaurant) {
         const comment = {
-            comment: $('#commentTextArea').val(),
-            commentator: $('#commentator').val(),
+            comment: Utils.prototype.capitalizeFirstLetter($('#commentTextArea').val()),
+            commentator: Utils.prototype.capitalizeFirstLetter($('#commentator').val()),
             stars: parseInt($('#commentRating option:selected').val())
         }
         restaurant.ratings.unshift(comment)

@@ -44,18 +44,18 @@ class InterfaceAddComment {
 
         const overlayAddCommentFormComment = $('<div class="overlay-add-comment-form-comment"></div>')
         const overlayAddCommentFormCommentInput = $('<div class="overlay-add-comment-form-comment-input"></div>')
-        const overlayAddCommentFormCommentInputTextArea = $('<textarea id="commentTextArea" placeholder="Commentaire..." maxlength="300"></textarea>')
+        const overlayAddCommentFormCommentInputTextArea = $('<textarea id="commentTextArea" placeholder="Commentaire..." maxlength="300" required></textarea>')
         overlayAddCommentFormCommentInput.append(overlayAddCommentFormCommentInputTextArea)
         overlayAddCommentFormComment.append(overlayAddCommentFormCommentInput)
 
         const overlayAddCommentFormNameRating = $('<div class="overlay-add-comment-form-name-rating"></div>')
 
         const overlayAddCommentFormNameInputContainer = $('<div class="overlay-add-comment-form-name-input"></div>')
-        const overlayAddCommentFormNameInput = $('<input id="commentator" placeholder="Nom..." />')
+        const overlayAddCommentFormNameInput = $('<input id="commentator" placeholder="Nom..." required />')
 
         const overlayAddCommentFormRatingSelectContainer = $('<div class="overlay-add-comment-form-rating-input"></div>')
-        const overlayAddCommentFormRatingSelect = $('<select id="commentRating" ></select>')
-        overlayAddCommentFormRatingSelect.append($('<option value="-1" class="hide">Note</option>'))
+        const overlayAddCommentFormRatingSelect = $('<select id="commentRating" required></select>')
+        overlayAddCommentFormRatingSelect.append($('<option value="" class="hide">Note</option>'))
         for (let i = 0; i <= this.maxRating; i++) {
             overlayAddCommentFormRatingSelect.append($(`<option value="${i}">${i}</option>`))
         }
