@@ -28,27 +28,6 @@ class InterfaceSearchbar {
                     return;
                 }
 
-                if( place.photos.length > 0){
-                    console.log(place.photos[0].getUrl())
-                }
-
-                const icon = {
-                    url: place.icon,
-                    size: new google.maps.Size(70, 70),
-                    origin: new google.maps.Point(0, 0),
-                    anchor: new google.maps.Point(17, 34),
-                    scaledSize: new google.maps.Size(30, 30),
-                };
-                // Create a marker for each place.
-                this.markers.push(
-                    new google.maps.Marker({
-                        map: this.map,
-                        icon,
-                        title: place.name,
-                        position: place.geometry.location,
-                    })
-                );
-
                 if (place.geometry.viewport) {
                     // Only geocodes have viewport.
                     bounds.union(place.geometry.viewport);

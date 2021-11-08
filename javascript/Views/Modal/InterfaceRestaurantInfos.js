@@ -55,23 +55,32 @@ class InterfaceRestaurantInfos {
     }
 
     generateInfosRestaurant (restaurant) {
-        const streetViewUrl = `https://maps.googleapis.com/maps/api/streetview?location=${restaurant.lat},${restaurant.long}&size=250x250&key=${GOOGLE_MAP_API_KEY}`
-
         const overlayRestaurantInfos = $("<div class='overlay-restaurant-infos'></div>")
         const overlayImgContainer = $("<div class='overlay-restaurant-img-container'></div>")
-        const overlayImg = $(`<img src='${streetViewUrl}' alt='${restaurant.name}'/>`)
-        overlayImgContainer.append(overlayImg)
+        if (restaurant.image) {
+            const overlayImg = $(`<img src='${restaurant.image}' alt='${restaurant.name}'/>`)
+            overlayImgContainer.append(overlayImg)
+        } else {
+            const streetViewUrl = `https://maps.googleapis.com/maps/api/streetview?location=${restaurant.lat},${restaurant.long}&size=250x250&key=${GOOGLE_MAP_API_KEY}`
+            const overlayImg = $(`<img src='${streetViewUrl}' alt='${restaurant.name}'/>`)
+            overlayImgContainer.append(overlayImg)
+        }
 
         const overlayInfosContainer = $("<div class='overlay-restaurant-infos-container'></div>")
-        const overlayInfosName = $(`<div class='overlay-restaurant-infos-name'>${Utils.prototype.capitalizeFirstLetter(restaurant.name)}</div>`)
+        const overlayInfosName = $(`<div class='overlay-restaurant-infos-name' title="${restaurant.name}">${Utils.prototype.substringString(Utils.prototype.capitalizeFirstLetter(restaurant.name), 35)}</div>`)
 
 
         const overlayInfosCoordContainer = $("<div class='overlay-restaurant-infos-coord-container'></div>")
         const overlayInfosCoord = $("<div class='overlay-restaurant-infos-coord'></div>")
 
-        const overlayInfosCoordAdress = $(`<div class="overlay-restaurant-infos-coord-adress">${Utils.prototype.formatAdressConvert(restaurant.adress)}</div>`)
-        const overlayInfosCoordPhone = $(`<div class="overlay-restaurant-infos-coord-phone">${restaurant.phone}</div>`)
-        overlayInfosCoord.append(overlayInfosCoordAdress, overlayInfosCoordPhone)
+        const overlayInfosCoordAdress = $(`<div class="overlay-restaurant-infos-coord-adress" title="${restaurant.adress}">${Utils.prototype.substringString(Utils.prototype.capitalizeFirstLetter(Utils.prototype.formatAdressConvert(restaurant.adress)), 50)}</div>`)
+        if (restaurant.phone) {
+            const overlayInfosCoordPhone = $(`<div class="overlay-restaurant-infos-coord-phone">${restaurant.phone}</div>`)
+            overlayInfosCoord.append(overlayInfosCoordAdress, overlayInfosCoordPhone)
+        } else {
+            const overlayInfosCoordPhone = $(`<div class="overlay-restaurant-infos-coord-phone">Non renseigné</div>`)
+            overlayInfosCoord.append(overlayInfosCoordAdress, overlayInfosCoordPhone)
+        }
 
         overlayInfosCoordContainer.append(overlayInfosCoord)
 
@@ -141,7 +150,7 @@ class InterfaceRestaurantInfos {
 
             overlayCommentTop.append(overlayCommentTopName, overlayCommentTopRating)
 
-            const overlayCommentContent = $(`<div class='overlay-restaurant-comments-content'>${rating.comment}</div>`)
+            const overlayCommentContent = $(`<div class='overlay-restaurant-comments-content' title="${rating.comment}">${rating.comment}</div>`)
 
             return overlayComment.append(overlayCommentTop, overlayCommentContent)
         }

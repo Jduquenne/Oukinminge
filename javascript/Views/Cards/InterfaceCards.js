@@ -7,17 +7,15 @@ class InterfaceCards {
      *
      * @param {*|jQuery} container
      * @param {Function} onCardClick
-     * @param {Function} onCardHover
      */
-    constructor( container, onCardClick = null, onCardHover = null ) {
+    constructor( container, onCardClick = null ) {
         this.onCardClick = onCardClick
-        this.onCardHover = onCardHover
         this.controlsElt = {
             infosRestaurant: container
         }
     }
 
-    displayCards(restaurants) {
+    async displayCards(restaurants) {
         this.controlsElt.infosRestaurant.empty()
         for (let i = 0; i < restaurants.length; i++) {
             this.controlsElt.infosRestaurant.append( this.createCard(restaurants[i]));
@@ -32,13 +30,14 @@ class InterfaceCards {
         $('.info-card-restaurant').removeClass('active')
     }
 
+
     /**
      *
      * @param {Object} restaurant
      * @returns {*|jQuery}
      */
     createCard(restaurant) {
-        const streetViewUrl = `https://maps.googleapis.com/maps/api/streetview?location=${restaurant.lat},${restaurant.long}&size=250x250&key=${GOOGLE_MAP_API_KEY}`
+        restaurant.cardImage = `https://maps.googleapis.com/maps/api/streetview?location=${restaurant.lat},${restaurant.long}&size=250x250&key=${GOOGLE_MAP_API_KEY}`
 
         const restaurantCard = $(`<div class='info-card-restaurant'></div>`)
 
@@ -47,17 +46,17 @@ class InterfaceCards {
         })
 
         const restaurantCardLeft = $("<div class='info-card-restaurant-left'></div>")
-        const restaurantCardLeftImg = $(`<img src='${streetViewUrl}' alt='${restaurant.name}'/>`)
+        const restaurantCardLeftImg = $(`<img src='${restaurant.cardImage}' alt='${restaurant.name}'/>`)
         restaurantCardLeft.append(restaurantCardLeftImg)
 
         const restaurantCardRight = $("<div class='info-card-restaurant-right'></div>")
 
         const restaurantCardRightMain = $("<div class='info-card-restaurant-main'></div>")
-        const restaurantCardRightMainName = $(`<div class='info-card-restaurant-name'>${Utils.prototype.capitalizeFirstLetter(restaurant.name)}</div>`)
-        const restaurantCardRightMainAdress = $(`<div class='info-card-restaurant-adress'>${Utils.prototype.formatAdressConvert(restaurant.adress)}</div>`)
+        const restaurantCardRightMainName = $(`<div class='info-card-restaurant-name'>${Utils.prototype.substringString(Utils.prototype.capitalizeFirstLetter(restaurant.name), 19)}</div>`)
+        const restaurantCardRightMainAdress = $(`<div class='info-card-restaurant-adress'>${Utils.prototype.substringString(Utils.prototype.capitalizeFirstLetter(restaurant.adress), 50)}</div>`)
         restaurantCardRightMain.append(restaurantCardRightMainName, restaurantCardRightMainAdress)
 
-        if (restaurant.ratings.length !== 0) {
+        if (restaurant.ratings.length !== 0 || restaurant.average !== null) {
             const restaurantCardRightRatingContainer = $("<div class='info-card-restaurant-rate-container'></div>")
 
             const restaurantCardRightRating = $(`<div class='info-card-restaurant-rate'>${restaurant.average}</div>`)

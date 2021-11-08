@@ -3,26 +3,30 @@ import { InterfaceCards } from "../Cards/InterfaceCards.js";
 import { InterfaceSearchbar } from "../Searchbar/InterfaceSearchbar.js";
 import { InterfaceRestaurantInfos } from "../Modal/InterfaceRestaurantInfos.js";
 import { InterfaceAddRestaurant } from "../Modal/InterfaceAddRestaurant.js";
-import { InterfaceCustomSelect } from "../CustomSelect/InterfaceCustomSelect.js";
+import { ALL_RESTAURANTS, InterfaceCustomSelect} from "../CustomSelect/InterfaceCustomSelect.js";
 import { RestaurantRepository } from "../../Repository/RestaurantRepository.js";
 import { Restaurant } from "../../Models/Restaurant.js";
+import {Comment} from "../../Models/Comment.js";
 import {InterfaceAddButtonRestaurant} from "../ButtonAddRestaurant/InterfaceAddButtonRestaurant.js";
 import {InterfaceAddComment} from "../Modal/InterfaceAddComment.js";
 import {Utils} from "../../Utils/Utils.js";
 
+
 class InterfaceApp {
     /**
      *
-     * @param {RestaurantRepository} restaurantsRepository
+     * @param {RestaurantRepository|RestaurantPlacesRepository} restaurantsRepository
      */
     constructor( restaurantsRepository) {
         this.restaurantsRepository = restaurantsRepository;
         this.restaurants = []
+        this.restaurantsFilter = []
+        this.restaurantSelected = null
+        this.locationSave = null
 
         this.defaultMapParams = {
             container: document.querySelector('#map'),
-            // Bailleul position
-            position: new window.google.maps.LatLng(50.739089888666605, 2.7346596096724562),
+            center: new window.google.maps.LatLng( 48.864716, 2.349014),
             zoom: 16,
             mapId: 'cce82df13239a86c',
             mapTypeControl: false,
@@ -38,15 +42,14 @@ class InterfaceApp {
             customRating:  $( ".selectRating" ),
             main: $( ".main" ),
         }
-        this.restaurantSelected = null
-        this.locationSave = null
+
 
         this.interfaceMap = new InterfaceMap(
             this.defaultMapParams,
-            (restaurant) => this.displayModalWithPanTo(restaurant),
+            (restaurant) => this.displayRestaurantInfosWithPanTo(restaurant),
             (position) => this.displayAddRestaurantForm(position)
         )
-        this.interfaceCards = new InterfaceCards(this.controlElt.infosRestaurant, (restaurant) => this.displayModalWithPanTo(restaurant))
+        this.interfaceCards = new InterfaceCards(this.controlElt.infosRestaurant, (restaurant) => this.displayRestaurantInfosWithPanTo(restaurant))
         this.interfaceSearchbar = new InterfaceSearchbar(this.interfaceMap.map, this.controlElt.searchbarInput)
         this.interfaceCustomSelect = new InterfaceCustomSelect(this.controlElt.customRating, (value)=>this.displayRestaurantsByRating(value))
         this.interfaceRestaurantInfos = new InterfaceRestaurantInfos(this.controlElt.overlayContainer, () => this.setMarkerAnimationNull(), () => this.displayAddCommentForm())
@@ -68,20 +71,71 @@ class InterfaceApp {
     }
 
     async displayApp() {
-        this.restaurants = await this.restaurantsRepository.findRestaurants()
-        await this.interfaceMap.initMap(this.restaurants)
-        this.interfaceCards.displayCards(this.restaurants)
+        if (navigator.geolocation) {
+            this.interfaceMap.getCurrentPosition().then(async (position) => {
+                this.interfaceMap.map.center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude)
+                await this.findRestaurantOnMapCenter()
+                this.interfaceAddButtonRestaurant.displayAddButtonRestaurant()
+                await this.onIdleMapEventChangeRestaurant()
+            },
+            async () => {
+                await this.findRestaurantOnMapCenter()
+                this.interfaceAddButtonRestaurant.displayAddButtonRestaurant()
+                await this.onIdleMapEventChangeRestaurant()
+            })
+        }
         this.interfaceSearchbar.initSearchBoxAutocomplete()
-        this.interfaceAddButtonRestaurant.displayAddButtonRestaurant()
-        this.interfaceAddComment.generateAddCommentForm()
     }
 
-    displayModalWithPanTo (restaurant) {
-        this.restaurantSelected = restaurant
-        console.log(this.restaurantSelected)
-        if (this.interfaceAddComment.isOpen) {
-            this.interfaceAddComment.resetModal()
+    async findRestaurantOnMapCenter() {
+        if (this.interfaceCustomSelect.value !== 'hide') {
+            // this.restaurants = await this.restaurantsRepository.findRestaurants()
+            this.restaurants = await this.restaurantsRepository.findRestaurants(this.interfaceMap.map, this.interfaceMap.map.getCenter())
+            this.restaurants = await this.restaurantsRepository.getRestaurantsByAverage(this.restaurants, this.interfaceCustomSelect.value, this.interfaceCustomSelect.maxRating)
+            await this.interfaceMap.initMap(this.restaurants)
+            await this.interfaceCards.displayCards(this.restaurants)
+        } else {
+            // this.restaurants = await this.restaurantsRepository.findRestaurants()
+            this.restaurants = await this.restaurantsRepository.findRestaurants(this.interfaceMap.map, this.interfaceMap.map.getCenter())
+            this.restaurants = await this.restaurantsRepository.getRestaurants(this.restaurants)
+            await this.interfaceMap.initMap(this.restaurants)
+            await this.interfaceCards.displayCards(this.restaurants)
         }
+
+    }
+
+    onIdleMapEventChangeRestaurant() {
+        this.interfaceMap.map.addListener('idle', () => {
+            if (!this.restaurantSelected) {
+                let timer = null
+                clearTimeout(timer)
+                timer = setTimeout(async () => {
+                    if (this.interfaceRestaurantInfos.isOpen) {
+                        this.interfaceRestaurantInfos.hideModal()
+                    }
+                    if (this.interfaceAddRestaurant.isOpen || this.interfaceAddComment.isOpen) {
+                        this.interfaceAddRestaurant.hideModal()
+                        this.interfaceAddComment.resetModal()
+                    }
+                    if (this.interfaceMap.map.getZoom() < 15) {
+                        this.restaurantsRepository.nearbySearchRadius = 1000
+                    } else {
+                        this.restaurantsRepository.nearbySearchRadius = 500
+                    }
+                    await this.findRestaurantOnMapCenter()
+                }, 500)
+            }
+        })
+    }
+
+    async displayRestaurantInfosWithPanTo(restaurant) {
+        this.restaurantSelected = restaurant
+
+        if (restaurant.fullInfoLoaded !== true) {
+            await restaurant.loadFullInfo(this.interfaceMap.map, restaurant)
+        }
+        this.interfaceAddComment.resetModal()
+
         if (this.interfaceAddButtonRestaurant.btnState === 2) {
             this.interfaceMap.markers[this.interfaceMap.markers.length - 1].setMap(null);
         }
@@ -104,6 +158,8 @@ class InterfaceApp {
     }
 
     async displayRestaurantsByRating(value) {
+        this.interfaceAddComment.resetModal()
+
         if (this.interfaceAddButtonRestaurant.btnState === 2) {
             this.interfaceMap.markers[this.interfaceMap.markers.length - 1].setMap(null);
         }
@@ -115,11 +171,16 @@ class InterfaceApp {
         } else if (this.interfaceRestaurantInfos.isOpen === true){
             this.interfaceRestaurantInfos.hideModal()
         }
-        this.restaurants = await this.restaurantsRepository.findRestaurants(value,this.interfaceCustomSelect.maxRating);
-        this.interfaceMap.displayMarkers(this.restaurants);
-        this.interfaceCards.displayCards(this.restaurants);
-        this.interfaceMap.setZoom(17)
-        this.interfaceMap.setCenterTo(this.restaurants[0]);
+
+        if (value === ALL_RESTAURANTS) {
+            this.restaurantsFilter = await this.restaurantsRepository.getRestaurants(this.restaurants)
+        } else {
+            this.restaurantsFilter = await this.restaurantsRepository.getRestaurantsByAverage(this.restaurants,value,this.interfaceCustomSelect.maxRating)
+        }
+        this.interfaceMap.displayMarkers(this.restaurantsFilter);
+        await this.interfaceCards.displayCards(this.restaurantsFilter);
+        // this.interfaceMap.setZoom(17)
+        // this.interfaceMap.setCenterTo(this.restaurants[0]);
     }
 
     displayAddRestaurantInstructions() {
@@ -137,7 +198,6 @@ class InterfaceApp {
     }
 
     displayAddRestaurantForm(position) {
-        console.log(this.restaurantSelected)
         this.locationSave = position
         this.interfaceAddRestaurant.controlsElt.overlayContainer.empty()
         this.interfaceAddRestaurant.generateAddForm()
@@ -147,7 +207,6 @@ class InterfaceApp {
     }
 
     displayAddCommentForm() {
-        console.log(this.restaurantSelected)
         this.interfaceAddComment.controlsElt.overlayCommentContainer.empty()
         this.interfaceAddComment.generateAddCommentForm()
         this.interfaceAddComment.showModal()
@@ -176,46 +235,49 @@ class InterfaceApp {
 
     async addRestaurant() {
         const newRestaurant = new Restaurant(
+            await Utils.prototype.getPlaceIdWithLocation(this.locationSave),
             $('#restaurantName').val(),
-            `${$('#restaurantStreet').val()},
-             ${$('#restaurantZipCode').val()} ${Utils.prototype.capitalizeFirstLetter($('#restaurantTown').val())}`,
+            `${$('#restaurantStreet').val()}, ${$('#restaurantZipCode').val()} ${Utils.prototype.capitalizeFirstLetter($('#restaurantTown').val())}`,
             $('#restaurantPhone').val(),
             this.locationSave.latLng.lat(),
             this.locationSave.latLng.lng(),
             ['Restaurant'],
-            []
+            [],
+            null
         )
         this.restaurantsRepository.addInMemoryRestaurant(newRestaurant)
-        this.restaurants = await this.restaurantsRepository.findRestaurants()
+        this.restaurants = await this.restaurantsRepository.getRestaurants(this.restaurants)
 
         this.interfaceAddRestaurant.hideModal()
         this.interfaceAddButtonRestaurant.setButtonOpenInstruction()
 
         this.interfaceMap.displayMarkers(this.restaurants);
-        this.interfaceCards.displayCards(this.restaurants);
-        this.interfaceMap.setZoom(17)
-        this.interfaceMap.setCenterTo(this.restaurants[0]);
+        await this.interfaceCards.displayCards(this.restaurants);
+        // this.interfaceMap.setZoom(17)
+        // this.interfaceMap.setCenterTo(this.restaurants[0]);
     }
 
     async addCommentForRestaurant(restaurant) {
-        const comment = {
-            comment: Utils.prototype.capitalizeFirstLetter($('#commentTextArea').val()),
-            commentator: Utils.prototype.capitalizeFirstLetter($('#commentator').val()),
-            stars: parseInt($('#commentRating option:selected').val())
-        }
+        const comment = new Comment(
+            Utils.prototype.generateUniqueId(),
+            Utils.prototype.capitalizeFirstLetter($('#commentTextArea').val()),
+            Utils.prototype.capitalizeFirstLetter($('#commentator').val()),
+            parseInt($('#commentRating option:selected').val()),
+            restaurant.id
+        )
         restaurant.ratings.unshift(comment)
+        this.restaurantsRepository.addInMemoryRestaurant(restaurant)
 
         restaurant.average = restaurant.getAverageRating(restaurant.ratings)
-        this.interfaceCards.displayCards(this.restaurants)
+        await this.interfaceCards.displayCards(this.restaurants)
         this.interfaceRestaurantInfos.updateRestaurantInfos(restaurant)
         this.interfaceCards.setSelectedCard(restaurant)
-        this.interfaceAddComment.hideModal()
+        this.interfaceAddComment.resetModal()
     }
 
     setMarkerAnimationNull() {
         if (this.interfaceMap.markerSelected) {
             this.restaurantSelected = null
-            console.log(this.restaurantSelected)
             this.interfaceMap.markerSelected.setAnimation(null);
             this.interfaceMap.setZoom(17)
             this.interfaceAddComment.resetModal()

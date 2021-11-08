@@ -6,9 +6,9 @@ googleApiScript.src = 'https://maps.googleapis.com/maps/api/js?key='+ GOOGLE_MAP
 googleApiScript.async = true;
 document.head.append(googleApiScript);
 
-window.onGoogleLoaded = function(){
+window.onGoogleLoaded = () => {
     const app = new AppController();
-    app.initApp();
+    app.initApp().then();
 }
 
 

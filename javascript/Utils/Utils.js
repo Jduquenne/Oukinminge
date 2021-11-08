@@ -28,6 +28,38 @@ class Utils {
     capitalizeFirstLetter(string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
+
+    substringString(string, maxLength) {
+        return string.slice(0, maxLength) + (string.length > maxLength ? "..." : "")
+    }
+
+    generateUniqueId() {
+        return '_' + Math.random().toString(36).substr(2, 9);
+    }
+
+    async getPlaceIdWithLocation(location) {
+        return new Promise((resolve, reject) => {
+            let geocoder = new google.maps.Geocoder()
+
+            const lat = location.latLng.lat();
+            const long = location.latLng.lng();
+            const latLng = {lat: lat, lng: long};
+
+            geocoder.geocode({'location': latLng}, function(results, status) {
+                if (status === google.maps.GeocoderStatus.OK) {
+                    if (results[1]) {
+                        resolve(results[1].place_id)
+                        return results[1].place_id
+                    } else {
+                        reject('No results found')
+                        window.alert('No results found');
+                    }
+                } else {
+                    window.alert('Geocoder failed due to: ' + status);
+                }
+            });
+        })
+    }
 }
 
 export { Utils }
