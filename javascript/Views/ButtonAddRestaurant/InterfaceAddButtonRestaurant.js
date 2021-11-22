@@ -37,6 +37,10 @@ class InterfaceAddButtonRestaurant {
         this.handleAddRestaurantClick(this.controlElt.buttonAddRestaurant)
     }
 
+    /**
+     *
+     * @param {jQuery} element
+     */
     handleAddRestaurantClick(element) {
         switch (this.btnState) {
             case 0:
@@ -51,18 +55,30 @@ class InterfaceAddButtonRestaurant {
         }
     }
 
+    /**
+     *
+     * @param {jQuery} element
+     */
     showInstructions(element) {
         element.off('click').on('click', () => {
             this.showInstructionsOnClick()
         })
     }
 
+    /**
+     *
+     * @param {jQuery} element
+     */
     hideAddRestaurantInstructions(element) {
         element.off('click').on('click', () => {
             this.resetAddRestaurantInstructions()
         })
     }
 
+    /**
+     *
+     * @param {jQuery} element
+     */
     hideAddRestaurantForm(element) {
         element.off('click').on('click', () => {
             this.resetAddRestaurant()

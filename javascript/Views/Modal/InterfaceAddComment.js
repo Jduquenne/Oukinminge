@@ -1,4 +1,9 @@
 class InterfaceAddComment {
+    /**
+     *
+     * @param {*|jQuery} container
+     * @param {function} onClickSubmit
+     */
     constructor(container, onClickSubmit) {
         this.controlsElt = {
             overlayCommentContainer: container

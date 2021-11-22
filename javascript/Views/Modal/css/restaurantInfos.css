@@ -40,6 +40,7 @@
     font-size: 20px;
     font-weight: normal;
     width: 100%;
+    max-height: 40%;
     margin-top: 5px;
 }
 
@@ -205,4 +206,30 @@
     max-height: 50px;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
+}
+
+
+@media (min-width: 0px) and (max-width: 1460px) {
+    .main .overlay-container .overlay-restaurant-infos .overlay-restaurant-img-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 300px;
+        height: 100%;
+    }
+
+    .main .overlay-container .overlay-restaurant-infos .overlay-restaurant-img-container img {
+        height: 90%;
+        width: 90%;
+        border-radius: 5px;
+        object-fit: cover;
+    }
+    .main .overlay-container .overlay-restaurant-infos .overlay-restaurant-infos-container {
+        width: 75vw;
+        height: calc(100% - 15px);
+    }
+
+    .main .overlay-container .overlay-restaurant-infos .overlay-restaurant-infos-container .overlay-restaurant-infos-coord-container .overlay-restaurant-infos-coord {
+        width: 100%;
+    }
 }

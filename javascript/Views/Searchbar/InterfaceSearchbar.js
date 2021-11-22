@@ -1,4 +1,9 @@
 class InterfaceSearchbar {
+    /**
+     *
+     * @param {google.maps.Map} map
+     * @param {*|jQuery} container
+     */
     constructor(map, container) {
         this.searchBox = new google.maps.places.SearchBox(container);
         this.map = map;

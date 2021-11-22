@@ -13,7 +13,7 @@
     font-size: 70px;
     font-family: 'Oswald', sans-serif;
     z-index: 5;
-    transition: all 0.5s ease-out;
+    transition: background-color 0.5s ease-out;
 }
 .main .btn-add-restaurant:hover {
     background-color: #EA0235;
@@ -27,4 +27,21 @@
     font-family: 'Oswald', sans-serif;
     cursor: pointer;
     z-index: 5;
+}
+
+@media (min-width: 0px) and (max-width: 1460px) {
+    .main .btn-add-restaurant {
+        position: absolute;
+        bottom: calc(150px + 30px);
+        left: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #EA4335;
+        color: #F1F3F4;
+        border-radius: 50%;
+        font-size: 70px;
+        font-family: 'Oswald', sans-serif;
+        z-index: 0;
+    }
 }

@@ -20,8 +20,6 @@
     height: 200px;
     width: calc(100% - 300px);
     left: 300px;
-    /*top: 326px;*/
-    /*top: 120px;*/
     top: -160px;
     z-index: 1;
     background-color: #F1F3F4;
@@ -35,5 +33,30 @@
 
 .main textarea::placeholder {
     color: #0D0D0D;
+}
+
+@media (min-width: 0px) and (max-width: 1460px) {
+    .main .overlays .overlay-container {
+        position: absolute;
+        left: 0;
+        z-index: 2;
+        height: 150px;
+        width: 100%;
+        background-color: #F1F3F4;
+        border-bottom: #A3AFBF 1px solid ;
+        transition: top 0.5s ease-out;
+    }
+
+    .main .overlays .overlay-add-comment-container {
+        position: absolute;
+        height: 200px;
+        width: 100%;
+        left: 0;
+        top: -160px;
+        z-index: 1;
+        background-color: #F1F3F4;
+        border-bottom: #A3AFBF 1px solid ;
+        transition: top 0.5s ease-out;
+    }
 }
 

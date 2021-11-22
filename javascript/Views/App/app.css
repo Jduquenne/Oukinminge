@@ -53,3 +53,11 @@
     display: flex;
     width: 100vw;
 }
+
+@media (min-width: 0px) and (max-width: 1460px) {
+    .main {
+        display: flex;
+        width: 100vw;
+        flex-direction: column;
+    }
+}

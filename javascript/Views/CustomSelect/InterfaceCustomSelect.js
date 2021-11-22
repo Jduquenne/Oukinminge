@@ -1,6 +1,11 @@
 export const ALL_RESTAURANTS = '-1'
 
 class InterfaceCustomSelect {
+    /**
+     *
+     * @param {*|jQuery} container
+     * @param {function} onSelectHandler
+     */
     constructor(container, onSelectHandler) {
         this.controlsElt = {
             customSelect: container,

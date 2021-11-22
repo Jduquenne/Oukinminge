@@ -1,5 +1,5 @@
 import {Comment} from "./Comment.js";
-import {Utils} from "../Utils/Utils.js";
+import {StringConvert} from "../Utils/stringConvert.js";
 
 class Restaurant {
 
@@ -25,11 +25,14 @@ class Restaurant {
         this.lat = lat
         this.long = long
         this.type = type
-        this.image = null
         this.ratings = ratings
         this.average = average
         this.loadFullInfoHandler = loadFullInfosHandler;
         this.fullInfoLoaded = fullInfoLoaded
+        this.card = null
+        this.marker = null
+        this.cardImage = null
+        this.image = null
     }
 
     loadFullInfo(map, restaurant) {
@@ -49,7 +52,7 @@ class Restaurant {
                         if (result.reviews) {
                             for (let i = 0; i < result.reviews.length; i++) {
                                 restaurant.ratings.push(new Comment(
-                                    Utils.prototype.generateUniqueId(),
+                                    StringConvert.prototype.generateUniqueId(),
                                     result.reviews[i].author_name,
                                     result.reviews[i].text,
                                     result.reviews[i].rating,
@@ -58,7 +61,7 @@ class Restaurant {
                             }
                         } else {
                             restaurant.ratings.push(new Comment(
-                                Utils.prototype.generateUniqueId(),
+                                StringConvert.prototype.generateUniqueId(),
                                 'Anonyme',
                                 'Excellent ! je recommande !',
                                 5,

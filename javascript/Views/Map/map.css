@@ -2,3 +2,11 @@
     width: calc(100vw - 300px);
     height: calc(100vh - 75px);
 }
+
+@media (min-width: 0px) and (max-width: 1460px) {
+    .main #map {
+        width: calc(100vw);
+        height: calc(100vh - 75px - 150px);
+        order: 0;
+    }
+}

@@ -1,4 +1,9 @@
-class Utils {
+class StringConvert {
+    /**
+     *
+     * @param { Restaurant } restaurant
+     * @returns {string}
+     */
     typeToString(restaurant) {
         let typeOfRestaurantToString = ""
         for (let i = 0; i < restaurant.type.length; i++) {
@@ -29,6 +34,12 @@ class Utils {
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
 
+    /**
+     *
+     * @param {string} string
+     * @param {number} maxLength
+     * @returns {*}
+     */
     substringString(string, maxLength) {
         return string.slice(0, maxLength) + (string.length > maxLength ? "..." : "")
     }
@@ -37,6 +48,11 @@ class Utils {
         return '_' + Math.random().toString(36).substr(2, 9);
     }
 
+    /**
+     *
+     * @param {Object} location
+     * @returns {Promise<Object[]>}
+     */
     async getPlaceIdWithLocation(location) {
         return new Promise((resolve, reject) => {
             let geocoder = new google.maps.Geocoder()
@@ -62,4 +78,4 @@ class Utils {
     }
 }
 
-export { Utils }
+export { StringConvert }

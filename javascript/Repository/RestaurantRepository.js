@@ -1,6 +1,6 @@
 import { Restaurant } from "../Models/Restaurant.js";
 import { Comment } from "../Models/Comment.js";
-import { Utils } from "../Utils/Utils.js";
+import { StringConvert } from "../Utils/stringConvert.js";
 
 const FILE_REPOSITORY_URL = "./javascript/data/restaurant.json";
 
@@ -18,7 +18,7 @@ class RestaurantRepository {
         for (let i = 0; i < data.length; i++) {
             ratings = []
             restaurants.push(new Restaurant(
-                Utils.prototype.generateUniqueId(),
+                StringConvert.prototype.generateUniqueId(),
                 data[i].name,
                 data[i].adress,
                 data[i].phone,
@@ -32,10 +32,11 @@ class RestaurantRepository {
                 ))
             for (let j = 0; j < data[i].ratings.length; j++) {
                 ratings.push(new Comment(
-                    Utils.prototype.generateUniqueId(),
+                    StringConvert.prototype.generateUniqueId(),
                     data[i].ratings[j].commentator,
                     data[i].ratings[j].comment,
                     data[i].ratings[j].stars,
+                    data[i].id
                     )
                 )
             }
@@ -45,8 +46,6 @@ class RestaurantRepository {
     }
 
     async getRestaurants(restaurants) {
-        console.log(restaurants)
-        console.log(this.inMemoryRestaurant)
         this.inMemoryRestaurant.forEach(restaurantInMemory => {
             if (!restaurants.includes(restaurantInMemory)) {
                 restaurants.unshift(restaurantInMemory)
@@ -57,7 +56,7 @@ class RestaurantRepository {
 
     /**
      *
-     * @param { Object[] }restaurants
+     * @param { Restaurant[] }restaurants
      * @param { number } min
      * @param { number } max
      * @returns {Promise<*[]>}

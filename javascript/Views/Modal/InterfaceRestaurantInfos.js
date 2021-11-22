@@ -1,7 +1,13 @@
-import { GOOGLE_MAP_API_KEY } from "../../config.js";
-import {Utils} from "../../Utils/Utils.js";
+import {GOOGLE_MAP_API_KEY} from "../../config.js";
+import {StringConvert} from "../../Utils/stringConvert.js";
 
 class InterfaceRestaurantInfos {
+    /**
+     *
+     * @param {*|jQuery} container
+     * @param {function} onClickClose
+     * @param {function} onClickAddRating
+     */
     constructor(container, onClickClose, onClickAddRating) {
         this.controlsElt = {
             overlayContainer: container,
@@ -13,48 +19,60 @@ class InterfaceRestaurantInfos {
         this.onClickAddRating = onClickAddRating
     }
 
-    setOpen () {
+    setOpen() {
         this.isOpen = true
     }
 
-    setClose () {
+    setClose() {
         this.isOpen = false
     }
 
     setHeightForRestaurantInfos() {
-        this.controlsElt.overlayContainer.css({ height: '250px' })
+        this.controlsElt.overlayContainer.css({height: '250px'})
     }
 
     showModal() {
         if (!this.isOpen) {
             this.setHeightForRestaurantInfos()
-            this.controlsElt.overlayContainer.css({ top: '75px'})
+            this.controlsElt.overlayContainer.css({top: '75px'})
             this.setOpen()
         }
     }
 
     hideModal() {
         if (this.isOpen) {
-            this.controlsElt.overlayContainer.css({ top: '-200px'})
+            this.controlsElt.overlayContainer.css({top: '-200px'})
             this.controlsElt.overlayContainer.empty()
             $('.info-card-restaurant').removeClass('active')
             this.setClose()
         }
     }
 
+    /**
+     *
+     * @param {Restaurant} restaurant
+     */
     updateRestaurantInfos(restaurant) {
         this.controlsElt.overlayContainer.empty()
         this.generateInfosRestaurant(restaurant)
     }
 
-    generateModal (restaurant) {
+    /**
+     *
+     * @param {Restaurant} restaurant
+     */
+    generateModal(restaurant) {
         if (restaurant) {
             this.controlsElt.overlayContainer.empty()
             this.generateInfosRestaurant(restaurant)
         }
     }
 
-    generateInfosRestaurant (restaurant) {
+    /**
+     *
+     * @param {Restaurant} restaurant
+     */
+    generateInfosRestaurant(restaurant) {
         const overlayRestaurantInfos = $("<div class='overlay-restaurant-infos'></div>")
         const overlayImgContainer = $("<div class='overlay-restaurant-img-container'></div>")
         if (restaurant.image) {
@@ -67,13 +85,13 @@ class InterfaceRestaurantInfos {
         }
 
         const overlayInfosContainer = $("<div class='overlay-restaurant-infos-container'></div>")
-        const overlayInfosName = $(`<div class='overlay-restaurant-infos-name' title="${restaurant.name}">${Utils.prototype.substringString(Utils.prototype.capitalizeFirstLetter(restaurant.name), 35)}</div>`)
+        const overlayInfosName = $(`<div class='overlay-restaurant-infos-name' title="${restaurant.name}">${StringConvert.prototype.substringString(StringConvert.prototype.capitalizeFirstLetter(restaurant.name), 35)}</div>`)
 
 
         const overlayInfosCoordContainer = $("<div class='overlay-restaurant-infos-coord-container'></div>")
         const overlayInfosCoord = $("<div class='overlay-restaurant-infos-coord'></div>")
 
-        const overlayInfosCoordAdress = $(`<div class="overlay-restaurant-infos-coord-adress" title="${restaurant.adress}">${Utils.prototype.substringString(Utils.prototype.capitalizeFirstLetter(Utils.prototype.formatAdressConvert(restaurant.adress)), 50)}</div>`)
+        const overlayInfosCoordAdress = $(`<div class="overlay-restaurant-infos-coord-adress" title="${restaurant.adress}">${StringConvert.prototype.substringString(StringConvert.prototype.capitalizeFirstLetter(StringConvert.prototype.formatAdressConvert(restaurant.adress)), 50)}</div>`)
         if (restaurant.phone) {
             const overlayInfosCoordPhone = $(`<div class="overlay-restaurant-infos-coord-phone">${restaurant.phone}</div>`)
             overlayInfosCoord.append(overlayInfosCoordAdress, overlayInfosCoordPhone)
@@ -86,7 +104,7 @@ class InterfaceRestaurantInfos {
 
         const overlayInfosRatingContainer = $("<div class='overlay-restaurant-infos-ratings-container'></div>")
 
-        if (restaurant.ratings.length !== 0){
+        if (restaurant.ratings.length !== 0) {
             const overlayInfosRating = $(`<div class='overlay-restaurant-infos-average'>${restaurant.average}</div>`)
 
             const overlayInfosStarsContainer = $("<div class='overlay-restaurant-infos-stars-container'></div>")
@@ -108,9 +126,9 @@ class InterfaceRestaurantInfos {
         const overlayInfosCommentAddRating = $(`<div class='overlay-restaurant-infos-comment-add-rating'>Donner son avis</div>`)
         overlayInfosCommentAddRating.on('click', this.onClickAddRating)
 
-        const overlayInfosType = $(`<div class="overlay-restaurant-infos-type">${Utils.prototype.typeToString(restaurant)}</div>`)
+        const overlayInfosType = $(`<div class="overlay-restaurant-infos-type">${StringConvert.prototype.typeToString(restaurant)}</div>`)
 
-        overlayInfosContainer.append(overlayInfosName, overlayInfosCoordContainer, overlayInfosRatingContainer,overlayInfosCommentAddRating ,overlayInfosType)
+        overlayInfosContainer.append(overlayInfosName, overlayInfosCoordContainer, overlayInfosRatingContainer, overlayInfosCommentAddRating, overlayInfosType)
 
         const overlayCloseModal = $('<div class="overlay-restaurant-close">X</div>')
         overlayCloseModal.on('click', () => {
@@ -118,15 +136,20 @@ class InterfaceRestaurantInfos {
             this.onClickClose(restaurant)
         })
         if (restaurant.ratings) {
-            overlayRestaurantInfos.append(overlayImgContainer, overlayInfosContainer,overlayCloseModal, this.generateComments(restaurant.ratings))
+            overlayRestaurantInfos.append(overlayImgContainer, overlayInfosContainer, overlayCloseModal, this.generateComments(restaurant.ratings))
         } else {
-            overlayRestaurantInfos.append(overlayImgContainer, overlayInfosContainer,overlayCloseModal, $("<div class='overlay-restaurant-comments-container'></div>"))
+            overlayRestaurantInfos.append(overlayImgContainer, overlayInfosContainer, overlayCloseModal, $("<div class='overlay-restaurant-comments-container'></div>"))
         }
 
         this.controlsElt.overlayContainer.append(overlayRestaurantInfos)
     }
 
-    generateComments (ratings) {
+    /**
+     *
+     * @param {Comment[]} ratings
+     * @returns {*|Window.jQuery|HTMLElement}
+     */
+    generateComments(ratings) {
         const overlayCommentsContainer = $("<div class='overlay-restaurant-comments-container'></div>")
 
         const overlayCommentsTitle = $("<div class='overlay-restaurant-comments-title'>Commentaires</div>")
@@ -135,11 +158,15 @@ class InterfaceRestaurantInfos {
         for (let i = 0; i < ratings.length; i++) {
             overlayCommentsContainer.append(this.generateOneComment(ratings[i]))
         }
-
         return overlayCommentsContainer
     }
 
-    generateOneComment (rating) {
+    /**
+     *
+     * @param {Comment} rating
+     * @returns {*|jQuery}
+     */
+    generateOneComment(rating) {
         if (rating) {
             const overlayComment = $("<div class='overlay-restaurant-comments'></div>")
 
@@ -154,8 +181,7 @@ class InterfaceRestaurantInfos {
 
             return overlayComment.append(overlayCommentTop, overlayCommentContent)
         }
-
     }
 }
 
-export { InterfaceRestaurantInfos }
+export {InterfaceRestaurantInfos}

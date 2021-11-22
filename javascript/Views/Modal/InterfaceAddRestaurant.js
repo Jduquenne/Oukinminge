@@ -1,4 +1,10 @@
 class InterfaceAddRestaurant {
+    /**
+     *
+     * @param {*|jQuery} container
+     * @param {function} onClickCancel
+     * @param {function} onClickAdd
+     */
     constructor(container, onClickCancel, onClickAdd) {
         this.controlsElt = {
             overlayContainer: container,
@@ -78,6 +84,13 @@ class InterfaceAddRestaurant {
         this.controlsElt.overlayContainer.append(overlayAddRestaurant)
     }
 
+    /**
+     *
+     * @param {string} id
+     * @param {string} placeholder
+     * @param {RegExp} regex
+     * @returns {*|Window.jQuery|HTMLElement}
+     */
     generateOneInput(id, placeholder, regex) {
         return $(`<input id="${id}" type="text" placeholder="${placeholder}" pattern="${regex}" required />`)
     }

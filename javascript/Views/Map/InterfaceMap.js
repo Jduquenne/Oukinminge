@@ -22,10 +22,19 @@ class InterfaceMap {
         this.currentPosition = null
     }
 
+    /**
+     *
+     * @param {Restaurant[]} restaurants
+     * @returns {Promise<void>}
+     */
     async initMap(restaurants) {
         this.displayMarkers(restaurants)
     }
 
+    /**
+     *
+     * @param {Restaurant[]} restaurants
+     */
     displayMarkers(restaurants) {
         this.markers.forEach((marker) => {
             marker.setMap(null);
@@ -47,6 +56,10 @@ class InterfaceMap {
         google.maps.event.removeListener(this.mapListener)
     }
 
+    /**
+     *
+     * @param {Object} position
+     */
     createMarkerWithPosition(position) {
         let marker = new google.maps.Marker({
             position: position,
@@ -58,6 +71,11 @@ class InterfaceMap {
         // this.map.setZoom(17)
     }
 
+    /**
+     *
+     * @param {Restaurant} restaurant
+     * @returns {*}
+     */
     createMarkerWithRestaurant(restaurant) {
         const restaurantLatLng = new google.maps.LatLng(restaurant.lat, restaurant.long);
         const iconImage = {
@@ -85,10 +103,18 @@ class InterfaceMap {
         return restaurant.marker
     }
 
+    /**
+     *
+     * @param {number} number
+     */
     setZoom(number) {
         this.map.setZoom(number)
     }
 
+    /**
+     *
+     * @param {Restaurant} restaurant
+     */
     setCenterTo(restaurant){
         this.map.panTo(restaurant.marker.positionForPanTo);
     }
@@ -102,31 +128,6 @@ class InterfaceMap {
         return new Promise(((resolve, reject) => {
             navigator.geolocation.getCurrentPosition(resolve, reject, options);
         }))
-        // navigator.geolocation.getCurrentPosition(
-        //     (position) => {
-        //         const location = {
-        //             lat: position.coords.latitude,
-        //             lng: position.coords.longitude,
-        //         }
-        //         this.currentPosition = new window.google.maps.LatLng(location.lat, location.lng)
-        //         this.map.setCenter(this.currentPosition, 16)
-        //         this.map.panTo(this.currentPosition);
-        //     },
-        //     () => {
-        //         this.handleLocationError(true, infoWindow, this.map.getCenter());
-        //     },
-        //     options
-        // );
-    }
-
-    handleLocationError(browserHasGeolocation, infoWindow, pos) {
-        infoWindow.setPosition(pos);
-        infoWindow.setContent(
-            browserHasGeolocation
-                ? "Error: The Geolocation service failed."
-                : "Error: Your browser doesn't support geolocation."
-        );
-        infoWindow.open(this.map);
     }
 
 }

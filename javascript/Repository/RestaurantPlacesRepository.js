@@ -8,7 +8,7 @@ class RestaurantPlacesRepository {
 
     findRestaurants(map, pos) {
         return new Promise((resolve, reject) => {
-            const restaurantWithoutFullInfos = []
+            let restaurantWithoutFullInfos = []
             const requestRestaurants = {
                 location: pos,
                 radius: this.nearbySearchRadius,
@@ -16,48 +16,55 @@ class RestaurantPlacesRepository {
             }
             let placesService = new google.maps.places.PlacesService(map)
 
-            placesService.nearbySearch(requestRestaurants, (result, status) => {
-                if (status === google.maps.places.PlacesServiceStatus.OK) {
-                    for (let i = 0; i < result.length; i++) {
-                        if (result[i].rating) {
-                            restaurantWithoutFullInfos.push(new Restaurant(
-                                result[i].place_id,
-                                result[i].name,
-                                result[i].vicinity,
-                                null,
-                                result[i].geometry.location.lat(),
-                                result[i].geometry.location.lng(),
-                                [],
-                                [],
-                                result[i].rating
-                            ))
-                            if (result[i].photos) {
-                                restaurantWithoutFullInfos[i].image = result[i].photos[0].getUrl()
+            placesService.nearbySearch(requestRestaurants, (restaurants, status) => {
+                if (restaurants.length !== 0) {
+                    if (status === google.maps.places.PlacesServiceStatus.OK) {
+                        for (let i = 0; i < restaurants.length; i++) {
+                            if (restaurants[i].rating) {
+                                restaurantWithoutFullInfos.push(new Restaurant(
+                                    restaurants[i].place_id,
+                                    restaurants[i].name,
+                                    restaurants[i].vicinity,
+                                    null,
+                                    restaurants[i].geometry.location.lat(),
+                                    restaurants[i].geometry.location.lng(),
+                                    [],
+                                    [],
+                                    restaurants[i].rating
+                                ))
+                                if (restaurants[i].photos) {
+                                    restaurantWithoutFullInfos[i].image = restaurants[i].photos[0].getUrl()
+                                }
+                            } else {
+                                restaurantWithoutFullInfos.push(new Restaurant(
+                                    restaurants[i].place_id,
+                                    restaurants[i].name,
+                                    restaurants[i].vicinity,
+                                    null,
+                                    restaurants[i].geometry.location.lat(),
+                                    restaurants[i].geometry.location.lng(),
+                                    [],
+                                    [],
+                                    5
+                                ))
                             }
-                        } else {
-                            restaurantWithoutFullInfos.push(new Restaurant(
-                                result[i].place_id,
-                                result[i].name,
-                                result[i].vicinity,
-                                null,
-                                result[i].geometry.location.lat(),
-                                result[i].geometry.location.lng(),
-                                [],
-                                [],
-                                5
-                            ))
                         }
-
+                        resolve(restaurantWithoutFullInfos)
+                    } else {
+                        reject('GooglePlacesNotWorking');
                     }
                 } else {
-                    console.log('Status Google place Not Ok')
-                    reject('Status Google place Not Ok');
+                    resolve(restaurantWithoutFullInfos = [])
                 }
-                resolve(restaurantWithoutFullInfos)
             })
         })
     }
 
+    /**
+     *
+     * @param {Restaurant[]} restaurants
+     * @returns {Promise<*>}
+     */
     async getRestaurants(restaurants) {
         restaurants.forEach(restaurant => {
             this.inMemoryRestaurant.forEach(restaurantInMemory => {
@@ -75,7 +82,7 @@ class RestaurantPlacesRepository {
 
     /**
      *
-     * @param { Object[] } restaurants
+     * @param { Restaurant[] } restaurants
      * @param { number } min
      * @param { number } max
      * @returns {Promise<*[]>}

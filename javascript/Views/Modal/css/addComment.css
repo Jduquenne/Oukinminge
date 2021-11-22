@@ -153,3 +153,51 @@
     background-color: #818897;
     color: #F5F5F5;
 }
+
+@media (min-width: 0px) and (max-width: 1460px) {
+    .overlay-add-comment h2 {
+        height: 20px;
+    }
+
+    .overlay-add-comment .overlay-add-comment-form {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        margin-left: 25px;
+        height: calc(100% - 30px);
+    }
+
+    .overlay-add-comment .overlay-add-comment-form .overlay-add-comment-form-comment {
+        width: 45%;
+        margin-right: 15px;
+    }
+
+    .overlay-add-comment .overlay-add-comment-form .overlay-add-comment-form-comment .overlay-add-comment-form-comment-input {
+        height: 100px;
+        width: 95%;
+    }
+
+    .overlay-add-comment .overlay-add-comment-form .overlay-add-comment-form-name-rating {
+        width: 35%;
+        margin-right: 15px;
+    }
+    .overlay-add-comment .overlay-add-comment-form .overlay-add-comment-form-name-rating .overlay-add-comment-form-name-input {
+        height: calc(50px - 20px);
+        width: 95%;
+    }
+
+    .overlay-add-comment .overlay-add-comment-form .overlay-add-comment-form-name-rating .overlay-add-comment-form-rating-input {
+        height: calc(50px - 20px);
+        width: 95%;
+    }
+
+    .overlay-add-comment .overlay-add-comment-form .overlay-add-comment-form-submit {
+        width: 20%;
+        margin-right: 15px;
+    }
+
+    .overlay-add-comment .overlay-add-comment-form .overlay-add-comment-form-submit .overlay-add-comment-form-submit-btn {
+        height: 50px;
+        width: 95%;
+    }
+}
